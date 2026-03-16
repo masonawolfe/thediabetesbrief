@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Diabetes Brief - Diabetes Self-Management</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#C8102E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <style>
         * {
             margin: 0;
@@ -1209,22 +1213,25 @@
 
         @media print {
             .quick-sheet-card {
-                display: none;
-            }
-            .quick-sheets-grid .quick-sheet-card:has(.quick-sheet-content) {
-                display: block;
-                box-shadow: none;
-                border: none;
+                display: block !important;
+                box-shadow: none !important;
+                border: 1px solid #ccc !important;
                 page-break-inside: avoid;
+                margin-bottom: 1rem;
             }
             .quick-sheet-header {
-                display: none;
+                background: none !important;
+                border-bottom: 2px solid var(--primary) !important;
+                padding: 0.75rem 1rem !important;
             }
             .quick-sheet-content {
-                display: block;
-                max-height: none;
-                padding: 0;
-                border: none;
+                display: block !important;
+                max-height: none !important;
+                padding: 1rem !important;
+                border: none !important;
+            }
+            .quick-sheets-grid {
+                display: block !important;
             }
         }
 
@@ -1449,6 +1456,10 @@
             { id: 17, title: 'Managing Diabetes Burnout', content: 'Feeling exhausted by the daily demands of diabetes is normal and common. Signs include skipping blood sugar checks, forgetting medications, or feeling hopeless about your numbers. Talk to your provider — adjusting your routine, simplifying your plan, or connecting with a support group can help.' },
             { id: 18, title: 'Fiber: Your Blood Sugar\'s Best Friend', content: 'Fiber slows the absorption of sugar into your bloodstream, preventing spikes after meals. Aim for 25-30 grams daily from vegetables, beans, whole grains, nuts, and seeds. Soluble fiber (oats, beans, apples) is especially effective at improving glucose control.' },
             { id: 19, title: 'Alcohol and Diabetes', content: 'Alcohol can cause unpredictable blood sugar swings — it may drop blood sugar hours later by blocking your liver from releasing glucose. If you drink, do so with food, check blood sugar before bed, and limit to 1 drink per day for women or 2 for men. Discuss alcohol use openly with your provider.' },
+            { id: 20, title: 'Mindful Eating for Blood Sugar Control', content: 'Eating slowly and paying attention to hunger cues helps prevent overeating and blood sugar spikes. Put your fork down between bites, chew thoroughly, and eat without screens. Studies show mindful eating improves A1C and reduces emotional eating in people with diabetes.' },
+            { id: 21, title: 'The Power of Walking After Meals', content: 'A 10-15 minute walk after eating can lower post-meal blood sugar by 20-30%. Your muscles use glucose for fuel during movement, pulling it directly from your bloodstream. This is one of the simplest, most effective lifestyle tools for blood sugar management — no equipment needed.' },
+            { id: 22, title: 'Weight Management and Insulin Resistance', content: 'Even modest weight loss (5-7% of body weight) can significantly improve insulin sensitivity and lower blood sugar. Focus on sustainable changes rather than crash diets. Combining balanced eating with regular movement is more effective long-term than either alone.' },
+            { id: 23, title: 'Building a Support System', content: 'Diabetes management is easier with support. Tell close friends and family what you need — whether it is meal planning help, exercise partners, or simply understanding. Online communities, local support groups, and diabetes educators can also provide valuable connection and accountability.' },
             // Core diabetes knowledge
             { id: 9, title: 'Nutrition and Meal Planning', content: 'Balanced meals with protein, fat, and fiber help stabilize blood sugar. Consistent meal timing supports more predictable insulin needs.' },
             { id: 5, title: 'Exercise and Diabetes', content: 'Exercise increases insulin sensitivity and lowers blood sugar. You may need to adjust insulin doses on days you exercise more than usual.' },
@@ -1472,6 +1483,8 @@
             { id: 14, question: 'How does poor sleep affect diabetes management?', options: [ { id: 'a', text: 'It has no measurable effect', correct: false }, { id: 'b', text: 'It increases insulin resistance, raising blood sugar the next day', correct: true }, { id: 'c', text: 'It only affects appetite, not blood sugar', correct: false }, { id: 'd', text: 'It lowers blood sugar dangerously', correct: false } ] },
             { id: 15, question: 'Why is fiber important for blood sugar control?', options: [ { id: 'a', text: 'Fiber raises blood sugar quickly for energy', correct: false }, { id: 'b', text: 'Fiber slows sugar absorption, preventing blood sugar spikes', correct: true }, { id: 'c', text: 'Fiber replaces the need for insulin', correct: false }, { id: 'd', text: 'Fiber has no effect on blood sugar', correct: false } ] },
             { id: 16, question: 'How can dehydration affect blood sugar readings?', options: [ { id: 'a', text: 'It makes readings lower', correct: false }, { id: 'b', text: 'It concentrates blood sugar, making readings appear higher', correct: true }, { id: 'c', text: 'It has no effect on readings', correct: false }, { id: 'd', text: 'It only affects A1C, not daily readings', correct: false } ] },
+            { id: 17, question: 'How much can a post-meal walk lower blood sugar?', options: [ { id: 'a', text: 'It has no measurable effect', correct: false }, { id: 'b', text: '20-30% reduction in post-meal blood sugar', correct: true }, { id: 'c', text: 'Only 1-2% difference', correct: false }, { id: 'd', text: 'It raises blood sugar after eating', correct: false } ] },
+            { id: 18, question: 'How much weight loss can significantly improve insulin sensitivity?', options: [ { id: 'a', text: 'You must lose at least 50% of body weight', correct: false }, { id: 'b', text: 'Even 5-7% of body weight can make a significant difference', correct: true }, { id: 'c', text: 'Weight loss has no effect on insulin', correct: false }, { id: 'd', text: 'Only gaining muscle matters, not losing weight', correct: false } ] },
             // Core diabetes knowledge questions
             { id: 5, question: 'How does exercise affect blood sugar?', options: [ { id: 'a', text: 'It always raises blood sugar', correct: false }, { id: 'b', text: 'It always lowers blood sugar', correct: false }, { id: 'c', text: 'It increases insulin sensitivity and often lowers blood sugar', correct: true }, { id: 'd', text: 'It has no effect on blood sugar', correct: false } ] },
             { id: 3, question: 'What is the first step in treating low blood sugar?', options: [ { id: 'a', text: 'Take more insulin', correct: false }, { id: 'b', text: 'Consume 15 grams of fast-acting carbohydrate', correct: true }, { id: 'c', text: 'Lie down and rest', correct: false }, { id: 'd', text: 'Call 911 immediately', correct: false } ] },
@@ -2255,6 +2268,10 @@
             dataEncryptionEnabled: !!localStorage.getItem('tdb_user_pin'),
             // DC-033: Audit Logging
             showAuditLog: false,
+            // User Feedback
+            feedbackRating: 0,
+            feedbackText: '',
+            feedbackSubmitted: false,
             // DC-034: Spanish Language Support
             language: localStorage.getItem('tdb_language') || 'en',
         };
@@ -3352,6 +3369,35 @@
                 </div>
 
                 <div class="card">
+                    <h2 class="card-title">Share Your Feedback</h2>
+                    <p style="margin-bottom: 1rem; color: var(--gray-600);">Help us improve The Diabetes Brief. Your feedback is stored locally and can be exported with your data.</p>
+                    ${state.feedbackSubmitted ? `
+                        <div style="background: var(--green-50, #f0fdf4); border: 1px solid var(--green-200, #bbf7d0); border-radius: 0.5rem; padding: 1rem; text-align: center;">
+                            <p style="color: var(--green-700, #15803d); font-weight: 600; margin-bottom: 0.25rem;">Thank you for your feedback!</p>
+                            <p style="color: var(--gray-600); font-size: 0.85rem;">Your response has been saved.</p>
+                            <button class="btn btn-secondary" onclick="app.resetFeedback()" style="margin-top: 0.75rem; font-size: 0.85rem;">Submit Another</button>
+                        </div>
+                    ` : `
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem;">How would you rate your experience?</label>
+                            <div style="display: flex; gap: 0.5rem;">
+                                ${[1,2,3,4,5].map(n => `
+                                    <button onclick="app.setFeedbackRating(${n})" style="width: 2.5rem; height: 2.5rem; border-radius: 50%; border: 2px solid ${state.feedbackRating >= n ? 'var(--primary)' : 'var(--gray-300)'}; background: ${state.feedbackRating >= n ? 'var(--primary-light)' : 'white'}; cursor: pointer; font-size: 1.1rem; color: ${state.feedbackRating >= n ? 'var(--primary)' : 'var(--gray-400)'}; font-weight: 600;">${n}</button>
+                                `).join('')}
+                            </div>
+                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--gray-500); margin-top: 0.25rem; padding: 0 0.25rem;">
+                                <span>Not useful</span><span>Very useful</span>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem;">What could we improve?</label>
+                            <textarea id="feedback-text" rows="3" placeholder="Tell us what you think..." style="width: 100%; padding: 0.75rem; border: 1px solid var(--gray-300); border-radius: 0.375rem; font-family: inherit; font-size: 0.9rem; resize: vertical; box-sizing: border-box;" oninput="app.updateFeedbackText(this.value)">${state.feedbackText}</textarea>
+                        </div>
+                        <button class="btn btn-primary" onclick="app.submitFeedback()" ${state.feedbackRating === 0 ? 'disabled' : ''} style="width: 100%;">Submit Feedback</button>
+                    `}
+                </div>
+
+                <div class="card">
                     <h2 class="card-title">Food Access & Affordability</h2>
                     <p style="margin-bottom: 1rem; color: var(--gray-600);">Check in on food security and access to diabetes-friendly foods.</p>
                     <button class="btn btn-secondary" onclick="app.openFoodInsecurityScreening()" style="margin-bottom: 0.5rem;">Food Security Check-in</button>
@@ -3666,6 +3712,20 @@
         }
 
         // Main render function
+        function renderActiveTab() {
+            switch (state.activeTab) {
+                case 'education': return renderEducationTab();
+                case 'quick-sheets': return renderQuickSheetsTab();
+                case 'quiz': return renderQuizTab();
+                case 'basal': return renderBasalTab();
+                case 'progress': return renderProgressTab();
+                case 'glossary': return renderGlossaryTab();
+                case 'info': return renderInfoTab();
+                case 'settings': return renderSettingsTab();
+                default: return renderEducationTab();
+            }
+        }
+
         function render() {
             const root = document.getElementById('root');
 
@@ -3681,29 +3741,8 @@
                     ${renderHeader()}
                     <div class="app-content" id="main-content" role="main">
                         ${renderTabNavigation()}
-                        <div class="tab-content ${state.activeTab === 'education' ? 'active' : ''}" role="tabpanel">
-                            ${renderEducationTab()}
-                        </div>
-                        <div class="tab-content ${state.activeTab === 'quick-sheets' ? 'active' : ''}" role="tabpanel">
-                            ${renderQuickSheetsTab()}
-                        </div>
-                        <div class="tab-content ${state.activeTab === 'quiz' ? 'active' : ''}" role="tabpanel">
-                            ${renderQuizTab()}
-                        </div>
-                        <div class="tab-content ${state.activeTab === 'basal' ? 'active' : ''}" role="tabpanel">
-                            ${renderBasalTab()}
-                        </div>
-                        <div class="tab-content ${state.activeTab === 'progress' ? 'active' : ''}" role="tabpanel">
-                            ${renderProgressTab()}
-                        </div>
-                        <div class="tab-content ${state.activeTab === 'glossary' ? 'active' : ''}" role="tabpanel">
-                            ${renderGlossaryTab()}
-                        </div>
-                        <div class="tab-content ${state.activeTab === 'info' ? 'active' : ''}" role="tabpanel">
-                            ${renderInfoTab()}
-                        </div>
-                        <div class="tab-content ${state.activeTab === 'settings' ? 'active' : ''}" role="tabpanel">
-                            ${renderSettingsTab()}
+                        <div class="tab-content active" role="tabpanel">
+                            ${renderActiveTab()}
                         </div>
                     </div>
                 </div>
@@ -4067,6 +4106,35 @@
                     localStorage.clear();
                     location.reload();
                 }
+            },
+
+            setFeedbackRating(n) {
+                state.feedbackRating = n;
+                render();
+            },
+
+            updateFeedbackText(text) {
+                state.feedbackText = text;
+            },
+
+            submitFeedback() {
+                const feedback = {
+                    rating: state.feedbackRating,
+                    comment: state.feedbackText,
+                    timestamp: Date.now(),
+                };
+                const existing = JSON.parse(localStorage.getItem('tdb_feedback') || '[]');
+                existing.push(feedback);
+                localStorage.setItem('tdb_feedback', JSON.stringify(existing));
+                state.feedbackSubmitted = true;
+                state.feedbackRating = 0;
+                state.feedbackText = '';
+                render();
+            },
+
+            resetFeedback() {
+                state.feedbackSubmitted = false;
+                render();
             },
 
             openHelpModal() {
@@ -4572,6 +4640,11 @@
             initApp();
         } catch (e) {
             document.getElementById('root').innerHTML = '<div style="padding:2rem;color:red;font-size:1.2rem;"><h2>The Diabetes Brief Error</h2><p>' + e.message + '</p><pre>' + e.stack + '</pre></div>';
+        }
+
+        // PWA: Register service worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js').catch(() => {});
         }
     </script>
 </body>
