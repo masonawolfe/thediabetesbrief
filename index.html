@@ -1150,17 +1150,6 @@
             font-size: 0.85rem;
         }
 
-        .pediatric-topic-badge {
-            display: inline-block;
-            padding: 0.25rem 0.5rem;
-            background: var(--purple-light);
-            color: #6d28d9;
-            border-radius: 0.25rem;
-            font-size: 0.75rem;
-            font-weight: 600;
-            margin-left: 0.5rem;
-        }
-
         /* Quick Sheets Styles */
         .quick-sheets-grid {
             display: grid;
@@ -1362,18 +1351,6 @@
             background: var(--gray-300);
         }
 
-        /* DC-029: Parental Controls Badge */
-        .supervised-badge {
-            background: var(--purple-light);
-            color: var(--primary);
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            display: inline-block;
-            margin-left: 0.5rem;
-        }
-
         /* CGM Import UI */
         .cgm-summary {
             background: var(--blue-50);
@@ -1413,69 +1390,6 @@
             overflow-y: auto;
         }
 
-        /* School/Camp Mode */
-        .school-day-plan {
-            background: linear-gradient(135deg, var(--purple-light) 0%, var(--info-light) 100%);
-            border: 2px solid var(--purple);
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .school-day-plan-title {
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .school-info-block {
-            background: var(--white);
-            padding: 1rem;
-            border-radius: 0.375rem;
-            margin-bottom: 1rem;
-        }
-
-        .school-info-label {
-            font-weight: 600;
-            color: var(--gray-700);
-            margin-bottom: 0.5rem;
-            font-size: 0.95rem;
-        }
-
-        .school-info-content {
-            color: var(--gray-600);
-            padding-left: 1rem;
-            border-left: 3px solid var(--primary);
-        }
-
-        .action-plan-step {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .action-plan-number {
-            background: var(--primary);
-            color: var(--white);
-            width: 2rem;
-            height: 2rem;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            flex-shrink: 0;
-        }
-
-        .action-plan-text {
-            flex: 1;
-            padding-top: 0.25rem;
-            color: var(--gray-800);
-        }
     </style>
 </head>
 <body>
@@ -1487,10 +1401,8 @@
         function migrateStorageKeys() {
             const oldKeys = [
                 'diacare_accepted_terms',
-                'diacare_age_group',
                 'diacare_onboarding_complete',
                 'diacare_adverse_events',
-                'diacare_pediatric_weight',
                 'diacare_profiles',
                 'diacare_current_profile',
                 'diacare_quiz_history',
@@ -1528,45 +1440,47 @@
         };
 
         const EDUCATION_TOPICS = [
-            { id: 1, title: 'Understanding Insulin Types', content: 'Insulin comes in different types based on how fast it works and how long it lasts. Understanding which type you\'re using helps you take it at the right time.' },
-            { id: 2, title: 'Blood Sugar Monitoring', content: 'Regular blood sugar checks help you understand how your body responds to food, exercise, stress, and insulin. Patterns in these readings guide adjustments.' },
-            { id: 3, title: 'Carbohydrate Counting Basics', content: 'Carbohydrates have the biggest impact on blood sugar. Learning to count grams of carbs helps you take the right mealtime insulin dose.' },
-            { id: 4, title: 'How Insulin Works', content: 'Insulin helps glucose enter cells for energy. Basal insulin keeps blood sugar steady between meals; bolus insulin covers carbs eaten at meals.' },
-            { id: 5, title: 'Exercise and Diabetes', content: 'Exercise increases insulin sensitivity and lowers blood sugar. You may need to adjust insulin doses on days you exercise more than usual.' },
-            { id: 6, title: 'Sick Day Management', content: 'During illness, blood sugar often rises. Keep taking your insulin, check blood sugar more often, and contact your healthcare provider if readings stay high.' },
-            { id: 7, title: 'Hypoglycemia Prevention & Treatment', content: 'Low blood sugar can happen quickly. Know your symptoms, treat immediately with 15g of fast carbs, and recheck after 15 minutes.' },
-            { id: 8, title: 'Managing Stress and Sleep', content: 'Stress and lack of sleep can raise blood sugar. Relaxation techniques and good sleep habits support better diabetes management.' },
+            // Lifestyle modification topics — the driving focus of the app
+            { id: 12, title: 'Building a Diabetes-Friendly Plate', content: 'The plate method is one of the simplest ways to manage blood sugar through food. Fill half your plate with non-starchy vegetables, a quarter with lean protein, and a quarter with whole grains or starchy foods. This balance slows glucose absorption and keeps you satisfied longer.' },
+            { id: 13, title: 'Exercise That Lowers Blood Sugar', content: 'Both aerobic exercise (walking, swimming, cycling) and resistance training (weights, bands) improve insulin sensitivity. Even a 15-minute walk after meals can reduce post-meal blood sugar spikes. Aim for 150 minutes of moderate activity per week, spread across most days.' },
+            { id: 14, title: 'How Stress Raises Blood Sugar', content: 'Stress triggers cortisol and adrenaline, which tell your liver to release stored glucose. Chronic stress can keep blood sugar elevated for days. Techniques like deep breathing, progressive muscle relaxation, and mindfulness have been shown to measurably lower blood sugar in people with diabetes.' },
+            { id: 15, title: 'Sleep and Blood Sugar Connection', content: 'Poor sleep increases insulin resistance — even one bad night can raise blood sugar the next day. Aim for 7-9 hours. Keep a consistent bedtime, avoid screens before bed, and keep your room cool and dark. Sleep apnea is common in diabetes and worth discussing with your provider.' },
+            { id: 16, title: 'Hydration and Blood Sugar', content: 'Dehydration concentrates blood sugar and makes readings appear higher. Water is the best choice — aim for 8+ glasses daily. Avoid sugary drinks, which spike glucose rapidly. Even diet sodas may affect blood sugar responses in some people. Herbal teas and infused water are good alternatives.' },
+            { id: 17, title: 'Managing Diabetes Burnout', content: 'Feeling exhausted by the daily demands of diabetes is normal and common. Signs include skipping blood sugar checks, forgetting medications, or feeling hopeless about your numbers. Talk to your provider — adjusting your routine, simplifying your plan, or connecting with a support group can help.' },
+            { id: 18, title: 'Fiber: Your Blood Sugar\'s Best Friend', content: 'Fiber slows the absorption of sugar into your bloodstream, preventing spikes after meals. Aim for 25-30 grams daily from vegetables, beans, whole grains, nuts, and seeds. Soluble fiber (oats, beans, apples) is especially effective at improving glucose control.' },
+            { id: 19, title: 'Alcohol and Diabetes', content: 'Alcohol can cause unpredictable blood sugar swings — it may drop blood sugar hours later by blocking your liver from releasing glucose. If you drink, do so with food, check blood sugar before bed, and limit to 1 drink per day for women or 2 for men. Discuss alcohol use openly with your provider.' },
+            // Core diabetes knowledge
             { id: 9, title: 'Nutrition and Meal Planning', content: 'Balanced meals with protein, fat, and fiber help stabilize blood sugar. Consistent meal timing supports more predictable insulin needs.' },
+            { id: 5, title: 'Exercise and Diabetes', content: 'Exercise increases insulin sensitivity and lowers blood sugar. You may need to adjust insulin doses on days you exercise more than usual.' },
+            { id: 8, title: 'Managing Stress and Sleep', content: 'Stress and lack of sleep can raise blood sugar. Relaxation techniques and good sleep habits support better diabetes management.' },
+            { id: 2, title: 'Blood Sugar Monitoring', content: 'Regular blood sugar checks help you understand how your body responds to food, exercise, stress, and insulin. Patterns in these readings guide adjustments.' },
+            { id: 3, title: 'Carbohydrate Counting Basics', content: 'Carbohydrates have the biggest impact on blood sugar. Learning to count grams of carbs helps you make informed food choices and predict blood sugar responses.' },
             { id: 10, title: 'A1C Goals and What They Mean', content: 'A1C measures your average blood sugar over 3 months. Most adults target an A1C of 7% or less; your provider may set a different goal for you.' },
+            { id: 7, title: 'Hypoglycemia Prevention & Treatment', content: 'Low blood sugar can happen quickly. Know your symptoms, treat immediately with 15g of fast carbs, and recheck after 15 minutes.' },
+            { id: 6, title: 'Sick Day Management', content: 'During illness, blood sugar often rises. Keep taking your insulin, check blood sugar more often, and contact your healthcare provider if readings stay high.' },
             { id: 11, title: 'Understanding and Managing Fear of Low Blood Sugar', content: 'Fear of hypoglycemia is common and understandable. Learn why it happens, how it can affect diabetes management, and strategies to find balance.' },
+            // Insulin knowledge (secondary to lifestyle)
+            { id: 1, title: 'Understanding Insulin Types', content: 'Insulin comes in different types based on how fast it works and how long it lasts. Understanding which type you\'re using helps you take it at the right time.' },
+            { id: 4, title: 'How Insulin Works', content: 'Insulin helps glucose enter cells for energy. Basal insulin keeps blood sugar steady between meals; bolus insulin covers carbs eaten at meals.' },
         ];
 
-        const PEDIATRIC_EDUCATION_TOPICS = {
-            'Child': [
-                { id: 'child-1', title: 'What is Diabetes?', content: 'Diabetes means your body has trouble managing blood sugar (the energy in your blood). When you have diabetes, you need help from insulin to keep your blood sugar just right. It\'s not your fault—it\'s just how your body works. With the right care, you can do all the things you love!', ageGroup: 'Child' },
-                { id: 'child-2', title: 'Why Do I Need Insulin?', content: 'Insulin is like a helper that lets the sugar in your blood get into your cells so you have energy to play, run, and think. Without enough insulin, sugar builds up in your blood instead of going into your cells. Insulin injections give your body the help it needs.', ageGroup: 'Child' },
-                { id: 'child-3', title: 'Talking to Friends About Diabetes', content: 'It\'s okay to tell your friends about your diabetes! You can explain that you need to check your blood sugar and take insulin, just like some people need glasses to see or inhalers to breathe. Real friends will understand and support you. You\'re still you, and diabetes doesn\'t change that!', ageGroup: 'Child' },
-                { id: 'child-4', title: 'Being Brave About Blood Sugar Checks', content: 'Finger pricks might feel a little uncomfortable, but they only last for a second. The good news is that checking your blood sugar helps you and your doctor know how well you\'re doing. Taking deep breaths before a check can help you feel calmer. Every check is a step toward taking great care of yourself!', ageGroup: 'Child' },
-            ],
-            'Teenager': [
-                { id: 'teen-1', title: 'Managing Diabetes at School', content: 'School can be a challenge with diabetes, but you can do it! Talk to your teachers and school nurse about your needs. You might need to eat a snack at a certain time, check your blood sugar, or give yourself insulin. It\'s your right to manage your diabetes at school, and most schools want to help.', ageGroup: 'Teenager' },
-                { id: 'teen-2', title: 'Diabetes and Sports', content: 'You can totally do sports with diabetes! Exercise is great for your health and blood sugar control. Just remember: intense activity lowers blood sugar, so you might need a snack before or after sports. Talk to your coach or PE teacher about your diabetes. Many pro athletes have diabetes and compete at the highest levels!', ageGroup: 'Teenager' },
-                { id: 'teen-3', title: 'Diabetes and Your Social Life', content: 'Having diabetes doesn\'t mean you can\'t go to parties, hang out with friends, or eat treats. You just need to be smart about it. You can enjoy pizza, cake, or other foods—just count the carbs and take your insulin. Don\'t let diabetes stop you from having fun and being yourself!', ageGroup: 'Teenager' },
-                { id: 'teen-4', title: 'Taking Charge of Your Health', content: 'As you grow up, you\'ll take on more responsibility for your diabetes care. That\'s awesome! Start by learning about your insulin, checking your own blood sugar, and talking to your doctor about your concerns. You\'re the expert on your body—listen to yourself and speak up about what you need.', ageGroup: 'Teenager' },
-            ]
-        };
-
         const QUIZ_QUESTIONS = [
-            { id: 1, question: 'What does basal insulin do?', options: [ { id: 'a', text: 'Covers carbohydrates at meals', correct: false }, { id: 'b', text: 'Provides steady insulin throughout the day between meals', correct: true }, { id: 'c', text: 'Lowers blood sugar very quickly', correct: false }, { id: 'd', text: 'Is only used for Type 1 diabetes', correct: false } ] },
-            { id: 2, question: 'How often should you check your blood sugar when using insulin?', options: [ { id: 'a', text: 'Only once per week', correct: false }, { id: 'b', text: 'Your healthcare provider will recommend a schedule based on your insulin regimen', correct: true }, { id: 'c', text: 'Never—insulin dose is set once', correct: false }, { id: 'd', text: 'Only when you feel symptoms', correct: false } ] },
+            // Lifestyle-focused questions first
+            { id: 11, question: 'What is the "plate method" for managing blood sugar?', options: [ { id: 'a', text: 'Eating only from small plates', correct: false }, { id: 'b', text: 'Half non-starchy vegetables, quarter protein, quarter whole grains', correct: true }, { id: 'c', text: 'Eating one meal per day on a single plate', correct: false }, { id: 'd', text: 'Avoiding all carbohydrates at every meal', correct: false } ] },
+            { id: 12, question: 'How long should a post-meal walk be to help lower blood sugar?', options: [ { id: 'a', text: 'At least 1 hour', correct: false }, { id: 'b', text: 'Even 15 minutes can reduce post-meal spikes', correct: true }, { id: 'c', text: 'Walks don\'t affect blood sugar', correct: false }, { id: 'd', text: 'Only runs count, not walks', correct: false } ] },
+            { id: 13, question: 'How does chronic stress affect blood sugar?', options: [ { id: 'a', text: 'It lowers blood sugar', correct: false }, { id: 'b', text: 'It has no effect', correct: false }, { id: 'c', text: 'Stress hormones cause the liver to release glucose, raising blood sugar', correct: true }, { id: 'd', text: 'It only affects Type 1 diabetes', correct: false } ] },
+            { id: 14, question: 'How does poor sleep affect diabetes management?', options: [ { id: 'a', text: 'It has no measurable effect', correct: false }, { id: 'b', text: 'It increases insulin resistance, raising blood sugar the next day', correct: true }, { id: 'c', text: 'It only affects appetite, not blood sugar', correct: false }, { id: 'd', text: 'It lowers blood sugar dangerously', correct: false } ] },
+            { id: 15, question: 'Why is fiber important for blood sugar control?', options: [ { id: 'a', text: 'Fiber raises blood sugar quickly for energy', correct: false }, { id: 'b', text: 'Fiber slows sugar absorption, preventing blood sugar spikes', correct: true }, { id: 'c', text: 'Fiber replaces the need for insulin', correct: false }, { id: 'd', text: 'Fiber has no effect on blood sugar', correct: false } ] },
+            { id: 16, question: 'How can dehydration affect blood sugar readings?', options: [ { id: 'a', text: 'It makes readings lower', correct: false }, { id: 'b', text: 'It concentrates blood sugar, making readings appear higher', correct: true }, { id: 'c', text: 'It has no effect on readings', correct: false }, { id: 'd', text: 'It only affects A1C, not daily readings', correct: false } ] },
+            // Core diabetes knowledge questions
+            { id: 5, question: 'How does exercise affect blood sugar?', options: [ { id: 'a', text: 'It always raises blood sugar', correct: false }, { id: 'b', text: 'It always lowers blood sugar', correct: false }, { id: 'c', text: 'It increases insulin sensitivity and often lowers blood sugar', correct: true }, { id: 'd', text: 'It has no effect on blood sugar', correct: false } ] },
             { id: 3, question: 'What is the first step in treating low blood sugar?', options: [ { id: 'a', text: 'Take more insulin', correct: false }, { id: 'b', text: 'Consume 15 grams of fast-acting carbohydrate', correct: true }, { id: 'c', text: 'Lie down and rest', correct: false }, { id: 'd', text: 'Call 911 immediately', correct: false } ] },
             { id: 4, question: 'What is an A1C test?', options: [ { id: 'a', text: 'A test of blood sugar right now', correct: false }, { id: 'b', text: 'A measure of average blood sugar over 3 months', correct: true }, { id: 'c', text: 'A test of urine sugar', correct: false }, { id: 'd', text: 'A daily blood glucose meter check', correct: false } ] },
-            { id: 5, question: 'How does exercise affect blood sugar?', options: [ { id: 'a', text: 'It always raises blood sugar', correct: false }, { id: 'b', text: 'It always lowers blood sugar', correct: false }, { id: 'c', text: 'It increases insulin sensitivity and often lowers blood sugar', correct: true }, { id: 'd', text: 'It has no effect on blood sugar', correct: false } ] },
-            { id: 6, question: 'What should you do if your blood sugar is consistently high at a certain time of day?', options: [ { id: 'a', text: 'Change your diet completely', correct: false }, { id: 'b', text: 'Skip the next meal', correct: false }, { id: 'c', text: 'Track the pattern and discuss with your healthcare provider about possible insulin adjustments', correct: true }, { id: 'd', text: 'Increase all insulin doses immediately', correct: false } ] },
+            { id: 6, question: 'What should you do if your blood sugar is consistently high at a certain time of day?', options: [ { id: 'a', text: 'Change your diet completely', correct: false }, { id: 'b', text: 'Skip the next meal', correct: false }, { id: 'c', text: 'Track the pattern and discuss with your healthcare provider about possible adjustments', correct: true }, { id: 'd', text: 'Increase all insulin doses immediately', correct: false } ] },
             { id: 7, question: 'What is the "dawn phenomenon"?', options: [ { id: 'a', text: 'Low blood sugar in the afternoon', correct: false }, { id: 'b', text: 'Rise in blood sugar early morning due to hormones', correct: true }, { id: 'c', text: 'High blood sugar from eating breakfast', correct: false }, { id: 'd', text: 'Diabetes symptoms that appear in spring', correct: false } ] },
-            { id: 8, question: 'When should you consult your healthcare provider about insulin adjustments?', options: [ { id: 'a', text: 'Never—manage on your own', correct: false }, { id: 'b', text: 'Only if you feel unwell', correct: false }, { id: 'c', text: 'Before making any changes to your insulin regimen', correct: true }, { id: 'd', text: 'Only if your A1C is above 8%', correct: false } ] },
+            { id: 10, question: 'Why is consistent meal timing important for blood sugar management?', options: [ { id: 'a', text: 'It\'s not important', correct: false }, { id: 'b', text: 'Consistent timing helps your body manage blood sugar more predictably', correct: true }, { id: 'c', text: 'It prevents exercise', correct: false }, { id: 'd', text: 'It eliminates the need for medication', correct: false } ] },
+            { id: 1, question: 'What does basal insulin do?', options: [ { id: 'a', text: 'Covers carbohydrates at meals', correct: false }, { id: 'b', text: 'Provides steady insulin throughout the day between meals', correct: true }, { id: 'c', text: 'Lowers blood sugar very quickly', correct: false }, { id: 'd', text: 'Is only used for Type 1 diabetes', correct: false } ] },
             { id: 9, question: 'What does "insulin sensitivity" mean?', options: [ { id: 'a', text: 'Allergy to insulin', correct: false }, { id: 'b', text: 'How well your body responds to insulin', correct: true }, { id: 'c', text: 'The speed of insulin injection', correct: false }, { id: 'd', text: 'Feeling emotional about taking insulin', correct: false } ] },
-            { id: 10, question: 'Why is consistent meal timing important for insulin users?', options: [ { id: 'a', text: 'It\'s not important', correct: false }, { id: 'b', text: 'Consistent timing helps insulin work more predictably with your meals', correct: true }, { id: 'c', text: 'It prevents exercise', correct: false }, { id: 'd', text: 'It eliminates the need for insulin', correct: false } ] },
         ];
 
         const BASAL_INSULINS = [
@@ -1576,15 +1490,6 @@
             { id: 'levemir', name: 'Levemir (insulin detemir)', duration: '~18-24 hours', peakTime: '6-8 hours' },
             { id: 'tresiba', name: 'Tresiba (insulin degludec)', duration: '~42 hours', peakTime: 'No pronounced peak' },
             { id: 'nph', name: 'NPH (Humulin N / Novolin N)', duration: '~12-18 hours', peakTime: '4-12 hours' },
-        ];
-
-        const RAPID_INSULINS = [
-            { id: 'humalog', name: 'Humalog (insulin lispro)', onsetTime: '15 min', peakTime: '1 hour', duration: '4-5 hours' },
-            { id: 'novolog', name: 'NovoLog (insulin aspart)', onsetTime: '10-20 min', peakTime: '1-3 hours', duration: '3-5 hours' },
-            { id: 'apidra', name: 'Apidra (insulin glulisine)', onsetTime: '15 min', peakTime: '1 hour', duration: '2-4 hours' },
-            { id: 'admelog', name: 'Admelog (insulin lispro)', onsetTime: '15 min', peakTime: '1 hour', duration: '4-5 hours' },
-            { id: 'fiasp', name: 'Fiasp (faster insulin aspart)', onsetTime: '~2.5 min', peakTime: '1-3 hours', duration: '3-5 hours' },
-            { id: 'lyumjev', name: 'Lyumjev (insulin lispro-aabc)', onsetTime: '~5 min', peakTime: '1-3 hours', duration: '4-5 hours' },
         ];
 
         // Drug interactions data
@@ -1739,52 +1644,6 @@
             }
         };
 
-        // Carb counting examples with diverse cuisines
-        const CARB_EXAMPLES = {
-            'low': {
-                examples: [
-                    'Grilled chicken salad with vegetables',
-                    'Grilled salmon with asparagus',
-                    'Sashimi (sushi rice-free)',
-                    'Tandoori chicken with raita',
-                    'Collard greens with smoked turkey',
-                    'Grilled steak with green beans',
-                    'Cauliflower rice stir-fry with chicken',
-                    'Zucchini noodles with marinara',
-                    'Eggs and vegetables'
-                ],
-                range: '<30g carbs'
-            },
-            'moderate': {
-                examples: [
-                    'Bean and cheese burrito (whole wheat tortilla)',
-                    'Rice bowl with grilled vegetables and chicken',
-                    'Roti (Indian flatbread) with dal (lentils)',
-                    'Jollof rice (small portion) with grilled fish',
-                    'Taco bowl with black beans and lettuce',
-                    'Pasta with protein and vegetables (1 cup)',
-                    'Rice and beans (1 cup combined)',
-                    'Pita with hummus and vegetables',
-                    'Whole wheat bread with turkey and cheese'
-                ],
-                range: '30-60g carbs'
-            },
-            'high': {
-                examples: [
-                    'Arroz con pollo with beans and plantains',
-                    'Pad Thai with noodles and peanut sauce',
-                    'Biryani (rice dish with meat/vegetables)',
-                    'Mac and cheese with cornbread',
-                    'Fried rice with egg rolls',
-                    'Empanadas with rice and beans',
-                    'Ramen with noodles and toppings',
-                    'Pizza (2 slices)',
-                    'Baked sweet potato with black beans'
-                ],
-                range: '>60g carbs'
-            }
-        };
-
         // Food insecurity screening
         const FOOD_INSECURITY_SCREENING = {
             q1: 'Within the past 12 months, I worried whether food would run out before I got money to buy more',
@@ -1812,29 +1671,9 @@
                             <li><strong>Fasting Blood Glucose:</strong> 80-130 mg/dL (ADA Standards of Care 2025)</li>
                             <li><strong>Basal Insulin High Threshold:</strong> >120 mg/dL</li>
                             <li><strong>Basal Insulin Low Threshold:</strong> <90 mg/dL</li>
-                            <li><strong>Mealtime Insulin High Threshold:</strong> >180 mg/dL (2-hour post-meal)</li>
-                            <li><strong>Mealtime Insulin Low Threshold:</strong> <70 mg/dL</li>
                         </ul>
 
-                        <h4 style="margin-top: 1rem; margin-bottom: 0.5rem; font-weight: 600;">Teenager Targets (Ages 13-17)</h4>
-                        <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
-                            <li><strong>Fasting Blood Glucose:</strong> 90-130 mg/dL (ISPAD Guidelines)</li>
-                            <li><strong>Basal Insulin High Threshold:</strong> >150 mg/dL</li>
-                            <li><strong>Basal Insulin Low Threshold:</strong> <90 mg/dL</li>
-                            <li><strong>Mealtime Insulin High Threshold:</strong> >190 mg/dL</li>
-                            <li><strong>Mealtime Insulin Low Threshold:</strong> <75 mg/dL</li>
-                        </ul>
-
-                        <h4 style="margin-top: 1rem; margin-bottom: 0.5rem; font-weight: 600;">Child Targets (Ages 6-12)</h4>
-                        <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
-                            <li><strong>Fasting Blood Glucose:</strong> 100-180 mg/dL (ISPAD Guidelines)</li>
-                            <li><strong>Basal Insulin High Threshold:</strong> >180 mg/dL</li>
-                            <li><strong>Basal Insulin Low Threshold:</strong> <100 mg/dL</li>
-                            <li><strong>Mealtime Insulin High Threshold:</strong> >200 mg/dL</li>
-                            <li><strong>Mealtime Insulin Low Threshold:</strong> <80 mg/dL</li>
-                        </ul>
-
-                        <p style="margin-top: 1rem; color: var(--gray-600);">These targets account for age-related differences in hypoglycemia risk, growth patterns, and developmental considerations. Individual targets should be determined in consultation with your healthcare provider.</p>
+                        <p style="margin-top: 1rem; color: var(--gray-600);">Individual targets should be determined in consultation with your healthcare provider.</p>
                     `
                 },
                 {
@@ -1844,8 +1683,6 @@
                         <ul style="margin-left: 1.5rem;">
                             <li><strong>American Diabetes Association (ADA).</strong> Standards of Care in Diabetes 2025. Published in Diabetes Care, January 2025. Target fasting glucose 80-130 mg/dL for most adults.</li>
                             <li><strong>American Association of Clinical Endocrinologists (AACE).</strong> Comprehensive Type 2 Diabetes Management Algorithm. Fasting glucose target <110 mg/dL for most patients.</li>
-                            <li><strong>International Society for Pediatric and Adolescent Diabetes (ISPAD).</strong> Global Guideline for the Diagnosis and Management of Type 1 Diabetes. Recommends individualized targets with particular attention to hypoglycemia prevention in children and adolescents.</li>
-                            <li><strong>Battelino T, et al.</strong> The use of real-time continuous glucose monitoring in management of diabetes. Pediatric Diabetes. 2018;19(5):355-360. Evidence supporting age-specific glucose targets.</li>
                         </ul>
 
                         <h4 style="margin-top: 1rem; margin-bottom: 0.75rem; font-weight: 600;">Important Notes</h4>
@@ -2111,8 +1948,7 @@
                 'tab.quickSheets': 'Quick Sheets',
                 'tab.quiz': 'Quiz',
                 'tab.basal': 'Basal',
-                'tab.mealtime': 'Mealtime',
-                'tab.progress': 'Progress',
+                'tab.progress': 'AI CGM Analysis',
                 'tab.glossary': 'Glossary',
                 'tab.info': 'Info',
                 'tab.settings': 'Settings',
@@ -2121,14 +1957,10 @@
                 'app.tagline': 'Education, not extremes',
                 'app.disclaimer': '⚠️ For educational purposes only. Not medical advice.',
                 // Button labels
-                'btn.changeAgeGroup': 'Change Age Group',
                 'btn.startWellnessCheck': 'Start Wellness Check',
                 'btn.setPin': 'Set PIN',
                 'btn.changePin': 'Change PIN',
                 'btn.removePin': 'Remove PIN',
-                'btn.changeParentPin': 'Change Parent PIN',
-                'btn.removeParentPin': 'Disable Controls',
-                'btn.enableParentalControls': 'Enable Parental Controls',
                 'btn.uploadCGM': 'Upload CSV File',
                 'btn.clearCGMData': 'Clear Imported Data',
                 'btn.clearAdverseEvents': 'Clear',
@@ -2140,7 +1972,6 @@
                 'btn.help': 'Help',
                 'btn.settings': 'Settings',
                 'btn.clearAllData': 'Clear All Data',
-                'btn.printSchoolHealthPlan': 'Print School Health Plan',
                 'btn.foodSecurityCheckIn': 'Food Security Check-in',
                 'btn.accept': 'Accept',
                 'btn.decline': 'Decline',
@@ -2149,16 +1980,13 @@
                 'btn.unlock': 'Unlock',
                 'btn.forgotPin': 'Forgot PIN?',
                 // Settings sections
-                'settings.ageGroup': 'Age Group',
                 'settings.usageStatistics': 'Usage Statistics',
                 'settings.topicsRead': 'Topics Read',
                 'settings.quizzesCompleted': 'Quizzes Completed',
                 'settings.wellnessCheck': 'Wellness Check',
                 'settings.adverseEvents': 'Adverse Event Reports',
-                'settings.schoolCamp': '📚 School & Camp Context',
                 'settings.security': '🔐 Security',
                 'settings.pinProtection': 'PIN Protection',
-                'settings.parentalControls': 'Parental Controls',
                 'settings.cgmDataImport': '📊 CGM Data Import',
                 'settings.dataEncryption': 'Data Encryption',
                 'settings.encryptionStatus': 'Status',
@@ -2171,30 +1999,18 @@
                 'settings.helpLegal': 'Help & Legal',
                 // Label texts
                 'label.current': 'Current',
-                'label.schoolNurseName': 'School Nurse Name',
-                'label.schoolNursePhone': 'School Nurse Phone',
-                'label.emergencyContactName': 'Emergency Contact Name',
-                'label.emergencyContactPhone': 'Emergency Contact Phone',
                 'label.supportedFormats': 'Supported Formats',
                 'label.noReports': 'No reports yet.',
                 'label.noData': 'No data imported yet. Upload a CSV file to see analytics.',
                 // Messages
                 'msg.pinProtectionInfo': 'Protect your data with a 4-digit PIN lock.',
-                'msg.parentalControlsInfo': 'Parent can approve insulin changes and data exports.',
                 'msg.cgmDataInfo': 'Import continuous glucose monitor data from CSV file.',
                 'msg.aboutAppInfo': 'Education, not extremes. Learn more and connect with us on social media.',
                 'msg.foodAccessInfo': 'Check in on food security and access to diabetes-friendly foods.',
                 'msg.exportDataInfo': 'Download your profile data, quiz history, and activities for your records or to share with your healthcare provider.',
-                'msg.schoolCampInfo': 'Shows essential info at top of app including nurse contact and low blood sugar action plan.',
-                // Form placeholders
-                'placeholder.nurseName': 'e.g., Mrs. Johnson',
-                'placeholder.nursePhone': 'e.g., 555-1234',
-                'placeholder.parentName': 'Parent/Guardian name',
-                'placeholder.parentPhone': 'Parent/Guardian phone',
                 // Modal titles
                 'modal.termsTitle': 'Terms of Use',
                 'modal.privacyTitle': 'Privacy Policy',
-                'modal.ageSelectTitle': 'Select Your Age Group',
                 // Toast messages
                 'toast.pinSetSuccess': 'PIN set successfully! App is now locked.',
                 'toast.pinChangedSuccess': 'PIN changed successfully.',
@@ -2213,12 +2029,9 @@
                 'audit.profileCreated': 'Profile created',
                 'audit.profileSwitched': 'Profile switched',
                 'audit.profileDeleted': 'Profile deleted',
-                'audit.ageGroupChanged': 'Age group changed',
                 'audit.pinSet': 'PIN set',
                 'audit.pinChanged': 'PIN changed',
                 'audit.pinRemoved': 'PIN removed',
-                'audit.parentalControlsEnabled': 'Parental controls enabled',
-                'audit.parentalControlsDisabled': 'Parental controls disabled',
                 'audit.insulinCalculated': 'Insulin calculation performed',
                 'audit.providerSummaryExported': 'Provider summary exported',
                 'audit.dataExported': 'Data exported',
@@ -2227,7 +2040,6 @@
                 'audit.adverseEventReported': 'Adverse event reported',
                 'audit.quickSheetViewed': 'Quick sheet viewed',
                 'audit.quickSheetDownloaded': 'Quick sheet downloaded',
-                'audit.schoolCampModeToggled': 'School/Camp mode toggled',
             },
             'es': {
                 // Tabs
@@ -2235,8 +2047,7 @@
                 'tab.quickSheets': 'Hojas Rápidas',
                 'tab.quiz': 'Cuestionario',
                 'tab.basal': 'Insulina Basal',
-                'tab.mealtime': 'Insulina de Comida',
-                'tab.progress': 'Progreso',
+                'tab.progress': 'Análisis CGM con IA',
                 'tab.glossary': 'Glosario',
                 'tab.info': 'Información',
                 'tab.settings': 'Configuración',
@@ -2245,14 +2056,10 @@
                 'app.tagline': 'Educación, no extremos',
                 'app.disclaimer': '⚠️ Solo para fines educativos. No es consejo médico.',
                 // Button labels
-                'btn.changeAgeGroup': 'Cambiar Grupo de Edad',
                 'btn.startWellnessCheck': 'Iniciar Verificación de Bienestar',
                 'btn.setPin': 'Establecer PIN',
                 'btn.changePin': 'Cambiar PIN',
                 'btn.removePin': 'Eliminar PIN',
-                'btn.changeParentPin': 'Cambiar PIN del Padre',
-                'btn.removeParentPin': 'Deshabilitar Controles',
-                'btn.enableParentalControls': 'Habilitar Controles Parentales',
                 'btn.uploadCGM': 'Cargar Archivo CSV',
                 'btn.clearCGMData': 'Borrar Datos Importados',
                 'btn.clearAdverseEvents': 'Borrar',
@@ -2264,7 +2071,6 @@
                 'btn.help': 'Ayuda',
                 'btn.settings': 'Configuración',
                 'btn.clearAllData': 'Borrar Todos los Datos',
-                'btn.printSchoolHealthPlan': 'Imprimir Plan de Salud Escolar',
                 'btn.foodSecurityCheckIn': 'Verificación de Seguridad Alimentaria',
                 'btn.accept': 'Aceptar',
                 'btn.decline': 'Rechazar',
@@ -2273,16 +2079,13 @@
                 'btn.unlock': 'Desbloquear',
                 'btn.forgotPin': '¿Olvidó el PIN?',
                 // Settings sections
-                'settings.ageGroup': 'Grupo de Edad',
                 'settings.usageStatistics': 'Estadísticas de Uso',
                 'settings.topicsRead': 'Temas Leídos',
                 'settings.quizzesCompleted': 'Cuestionarios Completados',
                 'settings.wellnessCheck': 'Verificación de Bienestar',
                 'settings.adverseEvents': 'Reportes de Eventos Adversos',
-                'settings.schoolCamp': '📚 Contexto Escolar y de Campamento',
                 'settings.security': '🔐 Seguridad',
                 'settings.pinProtection': 'Protección con PIN',
-                'settings.parentalControls': 'Controles Parentales',
                 'settings.cgmDataImport': '📊 Importar Datos de CGM',
                 'settings.dataEncryption': 'Encriptación de Datos',
                 'settings.encryptionStatus': 'Estado',
@@ -2295,30 +2098,18 @@
                 'settings.helpLegal': 'Ayuda y Legal',
                 // Label texts
                 'label.current': 'Actual',
-                'label.schoolNurseName': 'Nombre de la Enfermera Escolar',
-                'label.schoolNursePhone': 'Teléfono de la Enfermera Escolar',
-                'label.emergencyContactName': 'Nombre del Contacto de Emergencia',
-                'label.emergencyContactPhone': 'Teléfono del Contacto de Emergencia',
                 'label.supportedFormats': 'Formatos Compatibles',
                 'label.noReports': 'Sin reportes aún.',
                 'label.noData': 'Sin datos importados aún. Cargue un archivo CSV para ver análisis.',
                 // Messages
                 'msg.pinProtectionInfo': 'Proteja sus datos con un PIN de 4 dígitos.',
-                'msg.parentalControlsInfo': 'Los padres pueden aprobar cambios de insulina y exportaciones de datos.',
                 'msg.cgmDataInfo': 'Importar datos del monitor continuo de glucosa desde un archivo CSV.',
                 'msg.aboutAppInfo': 'Educación, no extremos. Obtenga más información y conéctese con nosotros en redes sociales.',
                 'msg.foodAccessInfo': 'Verificar seguridad alimentaria y acceso a alimentos seguros para diabéticos.',
                 'msg.exportDataInfo': 'Descargue sus datos de perfil, historial de cuestionarios y actividades para sus registros o para compartir con su proveedor de salud.',
-                'msg.schoolCampInfo': 'Muestra información esencial en la parte superior de la aplicación, incluido el contacto de la enfermera y el plan de acción para niveles bajos de azúcar en la sangre.',
-                // Form placeholders
-                'placeholder.nurseName': 'p.ej., Sra. Johnson',
-                'placeholder.nursePhone': 'p.ej., 555-1234',
-                'placeholder.parentName': 'Nombre del padre o tutor',
-                'placeholder.parentPhone': 'Teléfono del padre o tutor',
                 // Modal titles
                 'modal.termsTitle': 'Términos de Uso',
                 'modal.privacyTitle': 'Política de Privacidad',
-                'modal.ageSelectTitle': 'Seleccione Su Grupo de Edad',
                 // Toast messages
                 'toast.pinSetSuccess': '¡PIN establecido correctamente! La aplicación ahora está bloqueada.',
                 'toast.pinChangedSuccess': 'PIN cambiado correctamente.',
@@ -2337,12 +2128,9 @@
                 'audit.profileCreated': 'Perfil creado',
                 'audit.profileSwitched': 'Perfil cambiado',
                 'audit.profileDeleted': 'Perfil eliminado',
-                'audit.ageGroupChanged': 'Grupo de edad cambiado',
                 'audit.pinSet': 'PIN establecido',
                 'audit.pinChanged': 'PIN cambiado',
                 'audit.pinRemoved': 'PIN eliminado',
-                'audit.parentalControlsEnabled': 'Controles parentales habilitados',
-                'audit.parentalControlsDisabled': 'Controles parentales deshabilitados',
                 'audit.insulinCalculated': 'Cálculo de insulina realizado',
                 'audit.providerSummaryExported': 'Resumen del proveedor exportado',
                 'audit.dataExported': 'Datos exportados',
@@ -2351,7 +2139,6 @@
                 'audit.adverseEventReported': 'Evento adverso reportado',
                 'audit.quickSheetViewed': 'Hoja rápida visualizada',
                 'audit.quickSheetDownloaded': 'Hoja rápida descargada',
-                'audit.schoolCampModeToggled': 'Modo escolar/campamento alternado',
             }
         };
 
@@ -2413,10 +2200,8 @@
         const state = {
             activeTab: 'education',
             termsAccepted: localStorage.getItem('tdb_accepted_terms') === 'true',
-            ageGroup: localStorage.getItem('tdb_age_group') || 'Adult',
             onboardingComplete: localStorage.getItem('tdb_onboarding_complete') === 'true',
             showPrivacyModal: false,
-            showAgeModal: false,
             showOnboarding: false,
             onboardingStep: 0,
             showAdverseModal: false,
@@ -2435,18 +2220,9 @@
             },
             adverseEvents: JSON.parse(localStorage.getItem('tdb_adverse_events') || '[]'),
             basalConsentGiven: false,
-            rapidConsentGiven: false,
             activeLevelTab: 'level',
             showDDS4Modal: false,
             dds4Responses: {},
-            pediatricWeight: localStorage.getItem('tdb_pediatric_weight') || '',
-            showPediatricDoseWarning: false,
-            pendingDoseAction: null,
-            mealState: {
-                breakfast: { carbLevel: '', postMealBG: null },
-                lunch: { carbLevel: '', postMealBG: null },
-                dinner: { carbLevel: '', postMealBG: null },
-            },
             showProviderSummary: false,
             profiles: JSON.parse(localStorage.getItem('tdb_profiles') || '[]'),
             currentProfileIndex: parseInt(localStorage.getItem('tdb_current_profile') || '0'),
@@ -2458,8 +2234,6 @@
             },
             basalDrugInteractionsExpanded: false,
             basalCostCoverageExpanded: false,
-            mealDrugInteractionsExpanded: false,
-            mealCostCoverageExpanded: false,
             showFoodInsecurityModal: false,
             foodInsecurityResponses: {
                 q1: '',
@@ -2477,21 +2251,6 @@
             pinAttempts: 0,
             pinLockedUntil: null,
             pinInput: '',
-            // DC-029: Parental Oversight
-            parentPin: localStorage.getItem('tdb_parent_pin') || null,
-            parentControlsEnabled: !!localStorage.getItem('tdb_parent_pin'),
-            showParentPINSetup: false,
-            showParentPINVerify: false,
-            showParentPINVerifyReason: null,
-            parentPinInput: '',
-            // DC-030: School & Camp Context
-            schoolCampMode: localStorage.getItem('tdb_school_camp_mode') === 'true',
-            schoolNurseName: localStorage.getItem('tdb_school_nurse_name') || '',
-            schoolNursePhone: localStorage.getItem('tdb_school_nurse_phone') || '',
-            emergencyContactName: localStorage.getItem('tdb_emergency_contact_name') || '',
-            emergencyContactPhone: localStorage.getItem('tdb_emergency_contact_phone') || '',
-            scheduledCheckTimes: JSON.parse(localStorage.getItem('tdb_scheduled_check_times') || '[]'),
-            showSchoolHealthPlanModal: false,
             // DC-032: Data Encryption
             dataEncryptionEnabled: !!localStorage.getItem('tdb_user_pin'),
             // DC-033: Audit Logging
@@ -2504,8 +2263,6 @@
         if (state.profiles.length === 0) {
             state.profiles = [{
                 name: 'My Profile',
-                ageGroup: 'Adult',
-                weight: '',
                 data: {}
             }];
             localStorage.setItem('tdb_profiles', JSON.stringify(state.profiles));
@@ -2514,12 +2271,8 @@
         // Helper functions
         function saveToLocalStorage() {
             localStorage.setItem('tdb_accepted_terms', state.termsAccepted);
-            localStorage.setItem('tdb_age_group', state.ageGroup);
             localStorage.setItem('tdb_onboarding_complete', state.onboardingComplete);
             localStorage.setItem('tdb_adverse_events', JSON.stringify(state.adverseEvents));
-            if (state.pediatricWeight) {
-                localStorage.setItem('tdb_pediatric_weight', state.pediatricWeight);
-            }
             // DC-034: Save language preference
             localStorage.setItem('tdb_language', state.language);
         }
@@ -2577,13 +2330,7 @@
         }
 
         function getAgeThresholds() {
-            if (state.ageGroup === 'Child') {
-                return { basalHigh: 180, basalLow: 100, mealHigh: 200, mealLow: 80 };
-            } else if (state.ageGroup === 'Teenager') {
-                return { basalHigh: 150, basalLow: 90, mealHigh: 190, mealLow: 75 };
-            } else {
-                return { basalHigh: 120, basalLow: 90, mealHigh: 180, mealLow: 70 };
-            }
+            return { basalHigh: 120, basalLow: 90, mealHigh: 180, mealLow: 70 };
         }
 
         // Helper functions for DC-028 & DC-029: PIN hashing
@@ -2697,14 +2444,11 @@
         // Render functions for each component
         function renderHeader() {
             const currentProfile = state.profiles[state.currentProfileIndex];
-            const showSupervised = state.parentControlsEnabled && (state.ageGroup === 'Child' || state.ageGroup === 'Teenager');
-
             const headerHTML = `
                 <div class="app-header">
                     <div class="app-title">
                         🩸 The Diabetes Brief<br>
                         <span style="font-size: 0.7rem; font-weight: 400;">Education, not extremes</span>
-                        ${showSupervised ? '<span class="supervised-badge">👨‍👩‍👧 Supervised</span>' : ''}
                     </div>
                     <div class="app-header-actions" style="flex: 1; display: flex; justify-content: space-between; align-items: center;">
                         <div class="profile-selector">
@@ -2733,7 +2477,6 @@
                 { id: 'quick-sheets', labelKey: 'tab.quickSheets' },
                 { id: 'quiz', labelKey: 'tab.quiz' },
                 { id: 'basal', labelKey: 'tab.basal' },
-                { id: 'mealtime', labelKey: 'tab.mealtime' },
                 { id: 'progress', labelKey: 'tab.progress' },
                 { id: 'glossary', labelKey: 'tab.glossary' },
                 { id: 'info', labelKey: 'tab.info' },
@@ -2764,13 +2507,6 @@
             const searchTerm = state.educationState.searchTerm;
             let topicsToShow = [...EDUCATION_TOPICS];
 
-            // Add pediatric topics if applicable
-            if (state.ageGroup === 'Child' && PEDIATRIC_EDUCATION_TOPICS['Child']) {
-                topicsToShow = [...topicsToShow, ...PEDIATRIC_EDUCATION_TOPICS['Child']];
-            } else if (state.ageGroup === 'Teenager' && PEDIATRIC_EDUCATION_TOPICS['Teenager']) {
-                topicsToShow = [...topicsToShow, ...PEDIATRIC_EDUCATION_TOPICS['Teenager']];
-            }
-
             const filteredTopics = topicsToShow.filter(topic =>
                 topic.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 topic.content.toLowerCase().includes(searchTerm.toLowerCase())
@@ -2779,11 +2515,6 @@
             let html = `
                 <div class="card">
                     <h2 class="card-title">Education Hub</h2>
-                    ${(state.ageGroup === 'Child' || state.ageGroup === 'Teenager') ? `
-                        <div style="background: var(--purple-light); padding: 0.75rem; border-radius: 0.375rem; margin-bottom: 1rem; color: #6d28d9; font-size: 0.9rem;">
-                            <strong>Age-Specific Content:</strong> You're seeing topics tailored for ${state.ageGroup}s along with general diabetes education.
-                        </div>
-                    ` : ''}
                     <input
                         type="text"
                         class="search-input"
@@ -2803,7 +2534,6 @@
                 if (topic.id === 11 && isExpanded) {
                     topicContent = HYPOGLYCEMIA_FEAR_EDUCATION.content;
                 }
-                const isPediatric = PEDIATRIC_EDUCATION_TOPICS['Child']?.some(t => t.id === topic.id) || PEDIATRIC_EDUCATION_TOPICS['Teenager']?.some(t => t.id === topic.id);
                 html += `
                     <div
                         class="topic-card"
@@ -2815,7 +2545,6 @@
                     >
                         <div style="display: flex; align-items: center; gap: 0.5rem;">
                             <div class="topic-title" style="margin: 0; flex: 1;">${topic.title}</div>
-                            ${isPediatric ? `<span class="pediatric-topic-badge">${topic.ageGroup}</span>` : ''}
                         </div>
                         <div class="topic-description">${isExpanded ? topicContent : topic.content.substring(0, 80) + '...'}</div>
                     </div>
@@ -2992,29 +2721,6 @@
         function renderBasalTab() {
             let html = ``;
 
-            // Show School/Camp Day Plan if enabled
-            if (state.schoolCampMode && (state.ageGroup === 'Child' || state.ageGroup === 'Teenager')) {
-                html += `
-                    <div class="school-day-plan">
-                        <div class="school-day-plan-title">📅 School Day Plan</div>
-                        <div class="school-info-block">
-                            <div class="school-info-label">School Nurse Contact</div>
-                            <div class="school-info-content">
-                                ${state.schoolNurseName ? `<strong>${state.schoolNurseName}</strong><br>` : ''}
-                                📞 ${state.schoolNursePhone || 'Contact school office'}
-                            </div>
-                        </div>
-                        <div class="school-info-block">
-                            <div class="school-info-label">Emergency: Low Blood Sugar</div>
-                            <div class="school-info-content">
-                                Eat 15g fast carbs (juice, tablets) → Wait 15 min → Recheck
-                            </div>
-                        </div>
-                        <button class="btn btn-secondary" onclick="app.openSchoolHealthPlanModal()" style="width: 100%; margin-top: 0.5rem;">Full School Health Plan</button>
-                    </div>
-                `;
-            }
-
             html += `
                 <div class="card">
                     <h2 class="card-title">Basal Insulin Adjustment Tool</h2>
@@ -3147,214 +2853,6 @@
 
             return html;
         }
-
-        function renderMealtimeTab() {
-            let html = ``;
-
-            // Show School/Camp Day Plan if enabled
-            if (state.schoolCampMode && (state.ageGroup === 'Child' || state.ageGroup === 'Teenager')) {
-                html += `
-                    <div class="school-day-plan">
-                        <div class="school-day-plan-title">📅 School Day Plan</div>
-                        <div class="school-info-block">
-                            <div class="school-info-label">School Nurse Contact</div>
-                            <div class="school-info-content">
-                                ${state.schoolNurseName ? `<strong>${state.schoolNurseName}</strong><br>` : ''}
-                                📞 ${state.schoolNursePhone || 'Contact school office'}
-                            </div>
-                        </div>
-                        <div class="school-info-block">
-                            <div class="school-info-label">Emergency: Low Blood Sugar</div>
-                            <div class="school-info-content">
-                                Eat 15g fast carbs (juice, tablets) → Wait 15 min → Recheck
-                            </div>
-                        </div>
-                        <button class="btn btn-secondary" onclick="app.openSchoolHealthPlanModal()" style="width: 100%; margin-top: 0.5rem;">Full School Health Plan</button>
-                    </div>
-                `;
-            }
-
-            html += `
-                <div class="card">
-                    <h2 class="card-title">Mealtime Insulin Adjustment Tool</h2>
-                    <div class="alert alert-info">
-                        <strong>Educational Tool:</strong> This tool is designed for Type 2 diabetes management. Maintain diet consistency for best results.
-                    </div>
-                    ${!state.rapidConsentGiven ? `
-                        <div class="alert alert-warning">
-                            <input
-                                type="checkbox"
-                                id="rapid-consent"
-                                onchange="app.setRapidConsent(this.checked)"
-                                aria-label="I understand this is educational only"
-                            />
-                            <label for="rapid-consent" class="checkbox-label">
-                                I understand this is educational only and not medical advice. I will discuss any changes with my provider.
-                            </label>
-                        </div>
-                    ` : ''}
-                </div>
-            `;
-
-            if (!state.rapidConsentGiven) {
-                return html;
-            }
-
-            html += `
-                <div class="card">
-                    <form onsubmit="event.preventDefault(); app.calculateMealtimeRecommendation()">
-                        <div class="form-group">
-                            <label class="form-label">Insulin Type *</label>
-                            <select id="rapid-insulin-type" aria-label="Select rapid insulin type" required onchange="app.updateMealInsulinSelection()">
-                                <option value="">Select...</option>
-                                ${RAPID_INSULINS.map(insulin => `<option value="${insulin.id}">${insulin.name}</option>`).join('')}
-                            </select>
-                        </div>
-
-                        <!-- Drug Interactions Section -->
-                        <div style="margin-top: 1.5rem; border-top: 1px solid var(--gray-300); padding-top: 1.5rem;">
-                            <button type="button" class="collapsible-btn" onclick="app.toggleMealDrugInteractions()" style="width: 100%; text-align: left; padding: 0.75rem; background: var(--blue-50); border: none; cursor: pointer; font-weight: 600; border-radius: 0.375rem; display: flex; justify-content: space-between; align-items: center;">
-                                <span>💊 Common Drug Interactions</span>
-                                <span style="font-size: 0.8rem;">▼</span>
-                            </button>
-                            ${state.mealDrugInteractionsExpanded ? `
-                                <div style="margin-top: 1rem; padding: 1rem; background: var(--blue-50); border-radius: 0.375rem;">
-                                    <div class="alert alert-info" style="margin-bottom: 1rem;">
-                                        <strong>Important:</strong> This is not a complete list. Always inform your provider of all medications you take.
-                                    </div>
-                                    ${Object.entries(DRUG_INTERACTIONS).map(([key, info]) => `
-                                        <div style="margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--gray-200);">
-                                            <strong style="color: ${info.level === 'warning' ? 'var(--danger)' : 'var(--info-dark)'};">${info.drugs}</strong>
-                                            <div style="font-weight: 600; margin: 0.5rem 0; color: var(--gray-700);">${info.effect}</div>
-                                            <div style="font-size: 0.9rem; color: var(--gray-600);">${info.details}</div>
-                                        </div>
-                                    `).join('')}
-                                    <p style="font-size: 0.85rem; color: var(--gray-600); margin-top: 1rem; font-style: italic;">Talk to your pharmacist or healthcare provider about any medications you're taking.</p>
-                                </div>
-                            ` : ''}
-                        </div>
-
-                        <!-- Cost & Coverage Section -->
-                        <div style="margin-top: 1rem;">
-                            <button type="button" class="collapsible-btn" onclick="app.toggleMealCostCoverage()" style="width: 100%; text-align: left; padding: 0.75rem; background: var(--blue-50); border: none; cursor: pointer; font-weight: 600; border-radius: 0.375rem; display: flex; justify-content: space-between; align-items: center;">
-                                <span>💰 Cost & Coverage</span>
-                                <span style="font-size: 0.8rem;">▼</span>
-                            </button>
-                            ${state.mealCostCoverageExpanded ? `
-                                <div style="margin-top: 1rem; padding: 1rem; background: var(--blue-50); border-radius: 0.375rem;">
-                                    ${(() => {
-                                        const selected = document.getElementById('rapid-insulin-type')?.value;
-                                        const costData = selected && INSULIN_COST_DATA[selected];
-                                        if (!costData) {
-                                            return '<p style="color: var(--gray-600);">Select an insulin type to view cost and coverage information.</p>';
-                                        }
-                                        return `
-                                            <div style="margin-bottom: 1rem;">
-                                                <strong>${costData.brand}</strong>
-                                                <div style="margin-top: 0.5rem; padding: 0.5rem; background: var(--warning-light); border-radius: 0.375rem; color: var(--warning-dark); font-weight: 600;">${costData.cost}</div>
-                                            </div>
-                                            <div style="margin-bottom: 1rem;">
-                                                <strong style="display: block; margin-bottom: 0.5rem;">Typical Cost Range:</strong>
-                                                <p style="color: var(--gray-600); margin: 0;">${costData.typical}</p>
-                                            </div>
-                                            <div style="margin-bottom: 1rem;">
-                                                <strong style="display: block; margin-bottom: 0.5rem;">Generic/Biosimilar Alternatives:</strong>
-                                                <p style="color: var(--gray-600); margin: 0;">${costData.generic}</p>
-                                            </div>
-                                            <div style="margin-bottom: 1rem;">
-                                                <strong style="display: block; margin-bottom: 0.5rem;">Patient Assistance Programs:</strong>
-                                                <p style="color: var(--gray-600); margin: 0;">${costData.programs}</p>
-                                            </div>
-                                            <div style="background: var(--primary-light); padding: 0.75rem; border-radius: 0.375rem; border-left: 4px solid var(--primary);">
-                                                <strong style="color: var(--primary-dark);">$35/Month Insulin Cap:</strong>
-                                                <p style="color: var(--primary-dark); font-size: 0.9rem; margin: 0.5rem 0 0 0;">${costData.cap}</p>
-                                            </div>
-                                            <p style="font-size: 0.85rem; color: var(--gray-600); margin-top: 1rem;"><a href="#" style="color: var(--primary); text-decoration: none;">Talk to your pharmacist about formulary options</a> for the most affordable choice on your insurance plan.</p>
-                                        `;
-                                    })()}
-                                </div>
-                            ` : ''}
-                        </div>
-
-                        <div class="form-group" style="margin-top: 2rem;">
-                            <label class="form-label">Current Dose (units) *</label>
-                            <input type="number" id="rapid-dose" placeholder="e.g., 5" step="0.5" min="0" aria-label="Mealtime insulin dose" required />
-                        </div>
-
-                        ${(state.ageGroup === 'Child' || state.ageGroup === 'Teenager') ? `
-                            <div class="form-group">
-                                <label class="form-label">Weight (kg) *</label>
-                                <input type="number" id="pediatric-weight" placeholder="e.g., 35" step="0.5" min="0" value="${state.pediatricWeight}" onchange="app.updatePediatricWeight(this.value)" aria-label="Patient weight in kilograms" required />
-                                <div style="font-size: 0.875rem; color: var(--gray-600); margin-top: 0.5rem;">Used to validate insulin dose appropriateness</div>
-                            </div>
-                        ` : ''}
-
-                        <div class="form-group">
-                            <label class="form-label">Pre-meal and Post-meal Readings with Carb Context (3 days)</label>
-                            <div style="font-size: 0.875rem; color: var(--gray-600); margin-bottom: 1rem;">Enter readings for breakfast, lunch, and dinner with estimated carbohydrate intake</div>
-
-                            <div style="border-left: 3px solid var(--primary); padding-left: 1rem; margin-bottom: 1rem;">
-                                <strong>Breakfast</strong>
-                                <select id="carb-level-breakfast" style="margin-top: 0.5rem;" aria-label="Breakfast carbohydrate level" onchange="app.handleCarbLevelChange('breakfast', 'carb-level-breakfast')">
-                                    <option value="">Carb Intake (optional)</option>
-                                    <option value="low">Low Carb (<30g)</option>
-                                    <option value="moderate">Moderate (30-60g)</option>
-                                    <option value="high">High (>60g)</option>
-                                </select>
-                                <div class="carb-context-note" id="carb-examples-breakfast" style="font-size: 0.8rem; color: var(--gray-600); margin-top: 0.5rem; font-style: italic;"></div>
-                                <input type="number" placeholder="Pre-meal (mg/dL)" min="0" id="rapid-breakfast-pre" style="margin-top: 0.5rem;" aria-label="Breakfast pre-meal reading" required />
-                                <input type="number" placeholder="Post-meal (mg/dL)" min="0" id="rapid-breakfast-post" style="margin-top: 0.5rem;" aria-label="Breakfast post-meal reading" required />
-                            </div>
-
-                            <div style="border-left: 3px solid var(--warning); padding-left: 1rem; margin-bottom: 1rem;">
-                                <strong>Lunch</strong>
-                                <select id="carb-level-lunch" style="margin-top: 0.5rem;" aria-label="Lunch carbohydrate level" onchange="app.handleCarbLevelChange('lunch', 'carb-level-lunch')">
-                                    <option value="">Carb Intake (optional)</option>
-                                    <option value="low">Low Carb (<30g)</option>
-                                    <option value="moderate">Moderate (30-60g)</option>
-                                    <option value="high">High (>60g)</option>
-                                </select>
-                                <div class="carb-context-note" id="carb-examples-lunch" style="font-size: 0.8rem; color: var(--gray-600); margin-top: 0.5rem; font-style: italic;"></div>
-                                <input type="number" placeholder="Pre-meal (mg/dL)" min="0" id="rapid-lunch-pre" style="margin-top: 0.5rem;" aria-label="Lunch pre-meal reading" required />
-                                <input type="number" placeholder="Post-meal (mg/dL)" min="0" id="rapid-lunch-post" style="margin-top: 0.5rem;" aria-label="Lunch post-meal reading" required />
-                            </div>
-
-                            <div style="border-left: 3px solid var(--success); padding-left: 1rem;">
-                                <strong>Dinner</strong>
-                                <select id="carb-level-dinner" style="margin-top: 0.5rem;" aria-label="Dinner carbohydrate level" onchange="app.handleCarbLevelChange('dinner', 'carb-level-dinner')">
-                                    <option value="">Carb Intake (optional)</option>
-                                    <option value="low">Low Carb (<30g)</option>
-                                    <option value="moderate">Moderate (30-60g)</option>
-                                    <option value="high">High (>60g)</option>
-                                </select>
-                                <div class="carb-context-note" id="carb-examples-dinner" style="font-size: 0.8rem; color: var(--gray-600); margin-top: 0.5rem; font-style: italic;"></div>
-                                <input type="number" placeholder="Pre-meal (mg/dL)" min="0" id="rapid-dinner-pre" style="margin-top: 0.5rem;" aria-label="Dinner pre-meal reading" required />
-                                <input type="number" placeholder="Post-meal (mg/dL)" min="0" id="rapid-dinner-post" style="margin-top: 0.5rem;" aria-label="Dinner post-meal reading" required />
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Calculate Recommendation</button>
-                    </form>
-                </div>
-
-                <div id="rapid-result" style="display: none;"></div>
-                ${state.showPediatricDoseWarning ? `
-                    <div class="card">
-                        <div class="alert alert-warning" style="margin-bottom: 1rem;">
-                            <strong>⚠️ Dose Verification Required</strong>
-                            <p style="margin-top: 0.5rem;">${state.pendingDoseAction?.message}</p>
-                            <div style="margin-top: 1rem; display: flex; gap: 1rem;">
-                                <button class="btn btn-danger" onclick="app.confirmPediatricDose()">Confirm & Continue</button>
-                                <button class="btn btn-secondary" onclick="app.cancelPediatricDose()">Cancel</button>
-                            </div>
-                        </div>
-                    </div>
-                ` : ''}
-            `;
-
-            return html;
-        }
-
         function renderProgressTab() {
             const topicsRead = state.topicsRead.length;
             const totalTopics = EDUCATION_TOPICS.length;
@@ -3429,7 +2927,7 @@
                     <ul style="margin-left: 1.5rem; color: var(--gray-700);">
                         ${topicsRead < totalTopics ? `<li>Continue exploring education topics to strengthen your knowledge</li>` : `<li>You've read all available topics! Great progress!</li>`}
                         <li>Take the quiz regularly to test your understanding</li>
-                        <li>Use the Basal and Mealtime tools to apply your learning</li>
+                        <li>Use the Basal Insulin tool to apply your learning</li>
                         <li>Check out the Glossary to refresh key diabetes terms</li>
                     </ul>
                 </div>
@@ -3654,7 +3152,6 @@
 
             const today = new Date();
             const dateStr = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-            const ageGroup = state.ageGroup;
             const recentQuizzes = state.quizHistory.slice(-3).reverse();
             const lastDDS4Score = localStorage.getItem('tdb_last_dds4_score');
             const topicsReadCount = state.topicsRead.length;
@@ -3670,7 +3167,6 @@
 
                             <div class="provider-summary-section">
                                 <div class="provider-summary-section-title">Patient Information</div>
-                                <div class="provider-summary-item"><strong>Age Group:</strong> ${ageGroup}</div>
                                 <div class="provider-summary-item"><strong>Report Date:</strong> ${dateStr}</div>
                                 <div class="provider-summary-item"><strong>Profile Name:</strong> ${state.profiles[state.currentProfileIndex].name}</div>
                             </div>
@@ -3737,12 +3233,6 @@
                     <h2 class="card-title">Settings & Profile</h2>
 
                     <div class="settings-section">
-                        <div class="settings-title">Age Group</div>
-                        <p style="margin-bottom: 1rem; color: var(--gray-600);">Current: <strong>${state.ageGroup}</strong></p>
-                        <button class="btn btn-secondary" onclick="app.openAgeModal()">Change Age Group</button>
-                    </div>
-
-                    <div class="settings-section">
                         <div class="settings-title">Usage Statistics</div>
                         <div style="background: var(--blue-50); padding: 1rem; border-radius: 0.375rem; margin-bottom: 1rem;">
                             <div style="margin-bottom: 0.5rem;">📚 Topics Read: <strong>${topicsRead}</strong></div>
@@ -3770,45 +3260,6 @@
                     </div>
                 </div>
 
-                ${state.ageGroup !== 'Adult' ? `
-                    <div class="card">
-                        <h2 class="card-title">📚 School & Camp Context</h2>
-                        <div class="settings-section">
-                            <label class="checkbox-group">
-                                <input type="checkbox" ${state.schoolCampMode ? 'checked' : ''} onchange="app.setSchoolCampMode(this.checked)" />
-                                <span class="checkbox-label">Enable School/Camp Mode</span>
-                            </label>
-                            <p style="color: var(--gray-600); font-size: 0.9rem; margin-top: 0.5rem;">Shows essential info at top of app including nurse contact and low blood sugar action plan.</p>
-                        </div>
-
-                        ${state.schoolCampMode ? `
-                            <div class="settings-section">
-                                <label class="form-label">School Nurse Name</label>
-                                <input type="text" value="${state.schoolNurseName}" placeholder="e.g., Mrs. Johnson" onchange="app.setSchoolNurseName(this.value)" class="form-input" style="width: 100%; margin-bottom: 0.5rem;" />
-                            </div>
-
-                            <div class="settings-section">
-                                <label class="form-label">School Nurse Phone</label>
-                                <input type="tel" value="${state.schoolNursePhone}" placeholder="e.g., 555-1234" onchange="app.setSchoolNursePhone(this.value)" class="form-input" style="width: 100%; margin-bottom: 0.5rem;" />
-                            </div>
-
-                            <div class="settings-section">
-                                <label class="form-label">Emergency Contact Name</label>
-                                <input type="text" value="${state.emergencyContactName}" placeholder="Parent/Guardian name" onchange="app.setEmergencyContactName(this.value)" class="form-input" style="width: 100%; margin-bottom: 0.5rem;" />
-                            </div>
-
-                            <div class="settings-section">
-                                <label class="form-label">Emergency Contact Phone</label>
-                                <input type="tel" value="${state.emergencyContactPhone}" placeholder="Parent/Guardian phone" onchange="app.setEmergencyContactPhone(this.value)" class="form-input" style="width: 100%; margin-bottom: 0.5rem;" />
-                            </div>
-
-                            <div class="settings-section">
-                                <button class="btn btn-secondary" onclick="app.openSchoolHealthPlanModal()">Print School Health Plan</button>
-                            </div>
-                        ` : ''}
-                    </div>
-                ` : ''}
-
                 <div class="card">
                     <h2 class="card-title">🔐 Security</h2>
 
@@ -3822,19 +3273,6 @@
                             <button class="btn btn-secondary" onclick="app.openPINSetupModal()">Set PIN</button>
                         `}
                     </div>
-
-                    ${state.ageGroup !== 'Adult' ? `
-                        <div class="settings-section">
-                            <div class="settings-title">Parental Controls</div>
-                            <p style="margin-bottom: 1rem; color: var(--gray-600);">Parent can approve insulin changes and data exports.</p>
-                            ${state.parentControlsEnabled ? `
-                                <button class="btn btn-secondary" onclick="app.changeParentPIN()">Change Parent PIN</button>
-                                <button class="btn btn-danger btn-small" onclick="app.removeParentPIN()" style="margin-left: 0.5rem;">Disable Controls</button>
-                            ` : `
-                                <button class="btn btn-secondary" onclick="app.openParentPINSetupModal()">Enable Parental Controls</button>
-                            `}
-                        </div>
-                    ` : ''}
 
                     <div class="settings-section">
                         <div class="settings-title">Data Encryption (DC-032)</div>
@@ -3988,38 +3426,6 @@
                 `;
             }
 
-            // Age Group Modal
-            if (state.showAgeModal) {
-                html += `
-                    <div class="modal-overlay" onclick="app.closeAgeModal()">
-                        <div class="modal" onclick="event.stopPropagation()">
-                            <div class="modal-title">Select Age Group</div>
-                            <div class="modal-content">
-                                <p>Blood sugar thresholds are adjusted based on your age group.</p>
-                            </div>
-                            <div class="form-group">
-                                <label class="radio-group">
-                                    <input type="radio" name="age-group" value="Child" ${state.ageGroup === 'Child' ? 'checked' : ''} onchange="app.updateAgeGroup(this.value)" />
-                                    <span class="radio-label">Child (6-12 years)</span>
-                                </label>
-                                <label class="radio-group" style="margin-top: 0.5rem;">
-                                    <input type="radio" name="age-group" value="Teenager" ${state.ageGroup === 'Teenager' ? 'checked' : ''} onchange="app.updateAgeGroup(this.value)" />
-                                    <span class="radio-label">Teenager (13-18 years)</span>
-                                </label>
-                                <label class="radio-group" style="margin-top: 0.5rem;">
-                                    <input type="radio" name="age-group" value="Adult" ${state.ageGroup === 'Adult' ? 'checked' : ''} onchange="app.updateAgeGroup(this.value)" />
-                                    <span class="radio-label">Adult (18+ years)</span>
-                                </label>
-                            </div>
-                            <div class="modal-actions">
-                                <button class="btn btn-secondary" onclick="app.closeAgeModal()">Cancel</button>
-                                <button class="btn btn-primary" onclick="app.confirmAgeGroup()">Confirm</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }
-
             // Adverse Event Modal
             if (state.showAdverseModal) {
                 html += `
@@ -4070,7 +3476,7 @@
                     { title: 'Welcome to The Diabetes Brief', description: 'Your diabetes self-management companion. This tutorial will show you all available features.' },
                     { title: 'Education Hub', description: 'Learn about insulin types, blood sugar monitoring, carbohydrate counting, and more through interactive topics.' },
                     { title: 'Knowledge Quiz', description: 'Test your understanding with our educational quiz. Get feedback and identify areas to review.' },
-                    { title: 'Insulin Adjustment Tools', description: 'Use our basal and mealtime insulin tools to explore adjustment patterns. Always discuss changes with your provider.' },
+                    { title: 'Insulin Adjustment Tools', description: 'Use our basal insulin tool to explore adjustment patterns. Always discuss changes with your provider.' },
                     { title: 'Start Learning', description: 'You\'re all set! Navigate using the tabs above. Remember: this is educational only. Always consult your provider.' }
                 ];
 
@@ -4243,102 +3649,6 @@
                 `;
             }
 
-            // Parent PIN Setup Modal (DC-029)
-            if (state.showParentPINSetup) {
-                html += `
-                    <div class="modal-overlay" onclick="state.showParentPINSetup = false; render()">
-                        <div class="modal" onclick="event.stopPropagation()">
-                            <div class="modal-title">Enable Parental Controls</div>
-                            <div class="modal-content">
-                                <p style="color: var(--gray-600); margin-bottom: 1rem;">Create a 4-digit parent PIN. Parents can approve insulin changes and data exports.</p>
-                                <div class="pin-input-group">
-                                    <label class="form-label">Parent PIN (4 digits):</label>
-                                    <input
-                                        type="password"
-                                        maxlength="4"
-                                        placeholder="••••"
-                                        value="${state.parentPinInput}"
-                                        oninput="app.updateParentPINInput(this.value)"
-                                        style="width: 100%; padding: 0.75rem; font-size: 1.5rem; letter-spacing: 0.5rem; text-align: center;"
-                                    />
-                                </div>
-                            </div>
-                            <div class="modal-actions">
-                                <button class="btn btn-secondary" onclick="state.showParentPINSetup = false; render()">Cancel</button>
-                                <button class="btn btn-primary" onclick="app.submitParentPINSetup()" ${state.parentPinInput.length !== 4 ? 'disabled' : ''}>Enable</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }
-
-            // School Health Plan Modal (DC-030)
-            if (state.showSchoolHealthPlanModal) {
-                html += `
-                    <div class="modal-overlay" onclick="app.closeSchoolHealthPlanModal()">
-                        <div class="modal" onclick="event.stopPropagation()" style="max-width: 600px;">
-                            <div class="modal-title">School Health Plan</div>
-                            <div class="modal-content" style="max-height: 500px; overflow-y: auto; font-size: 0.9rem;">
-                                <div class="school-day-plan" style="background: var(--white); border: 1px solid var(--gray-300); border-left: 4px solid var(--primary);">
-                                    <div class="school-info-block">
-                                        <div class="school-info-label">School Nurse</div>
-                                        <div class="school-info-content">
-                                            ${state.schoolNurseName ? `<strong>${state.schoolNurseName}</strong><br>` : ''}
-                                            📞 ${state.schoolNursePhone || 'Contact school office'}
-                                        </div>
-                                    </div>
-
-                                    <div class="school-info-block">
-                                        <div class="school-info-label">Emergency Contact</div>
-                                        <div class="school-info-content">
-                                            ${state.emergencyContactName ? `<strong>${state.emergencyContactName}</strong><br>` : ''}
-                                            📞 ${state.emergencyContactPhone || 'Not provided'}
-                                        </div>
-                                    </div>
-
-                                    <div class="school-info-block">
-                                        <div class="school-info-label">If Blood Sugar is LOW (&lt;70)</div>
-                                        <div class="school-info-content">
-                                            <div class="action-plan-step" style="display: block; margin-bottom: 0.5rem;">
-                                                <strong>1.</strong> Take 15g fast carbs (juice, tablets, candy)
-                                            </div>
-                                            <div class="action-plan-step" style="display: block; margin-bottom: 0.5rem;">
-                                                <strong>2.</strong> Wait 15 minutes
-                                            </div>
-                                            <div class="action-plan-step" style="display: block; margin-bottom: 0.5rem;">
-                                                <strong>3.</strong> Recheck blood sugar
-                                            </div>
-                                            <div class="action-plan-step" style="display: block;">
-                                                <strong>4.</strong> If still low, repeat. Then eat a snack with protein.
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="school-info-block">
-                                        <div class="school-info-label">If Blood Sugar is HIGH (&gt;180)</div>
-                                        <div class="school-info-content">
-                                            <div class="action-plan-step" style="display: block; margin-bottom: 0.5rem;">
-                                                <strong>1.</strong> Check blood sugar to confirm
-                                            </div>
-                                            <div class="action-plan-step" style="display: block; margin-bottom: 0.5rem;">
-                                                <strong>2.</strong> Contact school nurse
-                                            </div>
-                                            <div class="action-plan-step" style="display: block;">
-                                                <strong>3.</strong> Drink water; continue normal activities
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-actions">
-                                <button class="btn btn-secondary" onclick="app.closeSchoolHealthPlanModal()">Close</button>
-                                <button class="btn btn-primary" onclick="app.printSchoolHealthPlan()">Print</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }
-
             return html;
         }
 
@@ -4382,9 +3692,6 @@
                         </div>
                         <div class="tab-content ${state.activeTab === 'basal' ? 'active' : ''}" role="tabpanel">
                             ${renderBasalTab()}
-                        </div>
-                        <div class="tab-content ${state.activeTab === 'mealtime' ? 'active' : ''}" role="tabpanel">
-                            ${renderMealtimeTab()}
                         </div>
                         <div class="tab-content ${state.activeTab === 'progress' ? 'active' : ''}" role="tabpanel">
                             ${renderProgressTab()}
@@ -4477,7 +3784,7 @@
                     if (typeof topicId === 'number' || /^\d+$/.test(topicId)) {
                         recordTopicRead(parseInt(topicId));
                     } else {
-                        // For pediatric topics, still track progress
+                        // For non-numeric topic IDs, still track progress
                         if (!state.topicsRead.includes(topicId)) {
                             state.topicsRead.push(topicId);
                             localStorage.setItem('tdb_topics_read_list', JSON.stringify(state.topicsRead));
@@ -4572,11 +3879,6 @@
                 render();
             },
 
-            setRapidConsent(checked) {
-                state.rapidConsentGiven = checked;
-                render();
-            },
-
             calculateBasalRecommendation() {
                 const insulinType = document.getElementById('basal-insulin-type').value;
                 const dose = parseFloat(document.getElementById('basal-dose').value);
@@ -4608,14 +3910,6 @@
                     recommendation_html += `
                         <div class="alert alert-danger" style="margin-bottom: 1rem;">
                             <strong>⚠️ Potential T1D Pattern Detected:</strong> Your insulin dose or variability pattern suggests possible Type 1 diabetes. Please consult with your provider for proper classification and insulin regimen.
-                        </div>
-                    `;
-                }
-
-                if (state.ageGroup !== 'Adult') {
-                    recommendation_html += `
-                        <div class="alert alert-warning" style="margin-bottom: 1rem;">
-                            <strong>⚠️ Pediatric Considerations:</strong> Basal insulin adjustments in children require careful monitoring due to growth, activity level changes, and increased hypoglycemia risk. Always work with your pediatric endocrinologist.
                         </div>
                     `;
                 }
@@ -4669,100 +3963,6 @@
                 }
             },
 
-            calculateMealtimeRecommendation() {
-                const insulinType = document.getElementById('rapid-insulin-type').value;
-                const dose = parseFloat(document.getElementById('rapid-dose').value);
-                const breakfastPre = parseInt(document.getElementById('rapid-breakfast-pre').value);
-                const breakfastPost = parseInt(document.getElementById('rapid-breakfast-post').value);
-                const lunchPre = parseInt(document.getElementById('rapid-lunch-pre').value);
-                const lunchPost = parseInt(document.getElementById('rapid-lunch-post').value);
-                const dinnerPre = parseInt(document.getElementById('rapid-dinner-pre').value);
-                const dinnerPost = parseInt(document.getElementById('rapid-dinner-post').value);
-
-                if (!insulinType || !dose || isNaN(breakfastPre) || isNaN(breakfastPost) || isNaN(lunchPre) || isNaN(lunchPost) || isNaN(dinnerPre) || isNaN(dinnerPost)) {
-                    alert('Please fill in all required fields');
-                    return;
-                }
-
-                const insulin = RAPID_INSULINS.find(i => i.id === insulinType);
-                const thresholds = getAgeThresholds();
-                const postMealReadings = [breakfastPost, lunchPost, dinnerPost];
-                const preMealReadings = [breakfastPre, lunchPre, dinnerPre];
-
-                let recommendation_html = '';
-
-                // Check for pre-elevated
-                const anyPreElevated = preMealReadings.some(r => r > 200);
-                if (anyPreElevated) {
-                    recommendation_html += `
-                        <div class="alert alert-warning" style="margin-bottom: 1rem;">
-                            <strong>⚠️ Pre-meal readings above 200:</strong> This suggests basal insulin may need adjustment, not mealtime insulin. Consult your provider about basal dose before adjusting rapid insulin.
-                        </div>
-                    `;
-                }
-
-                let recommendation = '';
-                const postMealHigh = postMealReadings.filter(r => r > thresholds.mealHigh).length;
-                const postMealLow = postMealReadings.filter(r => r < thresholds.mealLow).length;
-
-                if (postMealHigh >= 2) {
-                    const newDose = (dose * 1.1).toFixed(1);
-                    recommendation = `You may want to consider a 10% increase to ${newDose} units.`;
-                } else if (postMealLow >= 2) {
-                    const newDose = (dose * 0.9).toFixed(1);
-                    recommendation = `You may want to consider a 10% decrease to ${newDose} units.`;
-                } else {
-                    recommendation = `Your post-meal readings appear relatively controlled. Continue monitoring patterns with your provider.`;
-                }
-
-                recommendation_html += `
-                    <div class="recommendation-result">
-                        <div style="margin-bottom: 1rem;">
-                            <strong>Insulin Type:</strong> ${insulin.name}<br>
-                            <strong>Onset Time:</strong> ${insulin.onsetTime}<br>
-                            <strong>Peak Time:</strong> ${insulin.peakTime}<br>
-                            <strong>Duration:</strong> ${insulin.duration}<br>
-                            <strong>Post-meal readings above threshold:</strong> ${postMealHigh}/3
-                        </div>
-                        <div class="alert-callout">
-                            <strong>Provider Discussion Required:</strong> This is educational guidance only. ${recommendation}
-                        </div>
-                        <label style="display: flex; align-items: center; margin-top: 1rem; gap: 0.75rem;">
-                            <input type="checkbox" id="rapid-reveal-checkbox" onchange="app.toggleRapidBlur()" aria-label="I understand the limitation" />
-                            <span>I understand and want to see the recommendation</span>
-                        </label>
-                        <div id="rapid-recommendation-blurred" class="recommendation-blurred" style="margin-top: 1rem; padding: 1rem; background: var(--gray-100); border-radius: 0.375rem;">
-                            <strong>Recommendation:</strong> ${recommendation}
-                        </div>
-                    </div>
-                `;
-
-                document.getElementById('rapid-result').innerHTML = recommendation_html;
-                document.getElementById('rapid-result').style.display = 'block';
-            },
-
-            toggleRapidBlur() {
-                const elem = document.getElementById('rapid-recommendation-blurred');
-                if (elem) {
-                    elem.classList.toggle('recommendation-blurred');
-                }
-            },
-
-            handleCarbLevelChange(meal, selectId) {
-                const select = document.getElementById(selectId);
-                const level = select.value;
-                this.updateCarbLevel(meal, level);
-                const examplesEl = document.getElementById(`carb-examples-${meal}`);
-                if (examplesEl) {
-                    if (level && CARB_EXAMPLES[level]) {
-                        const examplesList = CARB_EXAMPLES[level].examples.slice(0, 3).join(', ');
-                        examplesEl.textContent = `Examples (${CARB_EXAMPLES[level].range}): ${examplesList}`;
-                    } else {
-                        examplesEl.textContent = '';
-                    }
-                }
-            },
-
             toggleBasalDrugInteractions() {
                 state.basalDrugInteractionsExpanded = !state.basalDrugInteractionsExpanded;
                 render();
@@ -4773,21 +3973,7 @@
                 render();
             },
 
-            toggleMealDrugInteractions() {
-                state.mealDrugInteractionsExpanded = !state.mealDrugInteractionsExpanded;
-                render();
-            },
-
-            toggleMealCostCoverage() {
-                state.mealCostCoverageExpanded = !state.mealCostCoverageExpanded;
-                render();
-            },
-
             updateBasalInsulinSelection() {
-                render();
-            },
-
-            updateMealInsulinSelection() {
                 render();
             },
 
@@ -4798,28 +3984,6 @@
 
             closePrivacyModal() {
                 state.showPrivacyModal = false;
-                render();
-            },
-
-            openAgeModal() {
-                state.showAgeModal = true;
-                render();
-            },
-
-            closeAgeModal() {
-                state.showAgeModal = false;
-                render();
-            },
-
-            updateAgeGroup(value) {
-                state.ageGroup = value;
-            },
-
-            confirmAgeGroup() {
-                saveToLocalStorage();
-                auditLog('Age group changed', { newAgeGroup: state.ageGroup });
-                state.showAgeModal = false;
-                addToast(`Age group updated to ${state.ageGroup}`, 'info');
                 render();
             },
 
@@ -4947,154 +4111,6 @@
                 render();
             },
 
-            updateCarbLevel(meal, level) {
-                state.mealState[meal].carbLevel = level;
-                const examples = {
-                    low: 'Salad with grilled chicken, egg with vegetables, or light soup',
-                    moderate: 'Sandwich with fruit, rice bowl with protein, or pasta with light sauce',
-                    high: 'Pasta with bread, rice with multiple sides, or large bowl of cereal'
-                };
-                const examplesEl = document.getElementById(`carb-examples-${meal}`);
-                if (examplesEl) {
-                    examplesEl.textContent = level ? `Examples: ${examples[level]}` : '';
-                }
-            },
-
-            updatePediatricWeight(weight) {
-                state.pediatricWeight = weight;
-            },
-
-            calculateMealtimeRecommendation() {
-                const insulinType = document.getElementById('rapid-insulin-type').value;
-                const dose = parseFloat(document.getElementById('rapid-dose').value);
-                const breakfastPre = parseInt(document.getElementById('rapid-breakfast-pre').value);
-                const breakfastPost = parseInt(document.getElementById('rapid-breakfast-post').value);
-                const lunchPre = parseInt(document.getElementById('rapid-lunch-pre').value);
-                const lunchPost = parseInt(document.getElementById('rapid-lunch-post').value);
-                const dinnerPre = parseInt(document.getElementById('rapid-dinner-pre').value);
-                const dinnerPost = parseInt(document.getElementById('rapid-dinner-post').value);
-
-                // Collect carb levels
-                const breakfastCarbLevel = document.getElementById('carb-level-breakfast').value;
-                const lunchCarbLevel = document.getElementById('carb-level-lunch').value;
-                const dinnerCarbLevel = document.getElementById('carb-level-dinner').value;
-
-                state.mealState.breakfast.carbLevel = breakfastCarbLevel;
-                state.mealState.lunch.carbLevel = lunchCarbLevel;
-                state.mealState.dinner.carbLevel = dinnerCarbLevel;
-
-                if (!insulinType || !dose || !breakfastPre || !breakfastPost || !lunchPre || !lunchPost || !dinnerPre || !dinnerPost) {
-                    alert('Please fill in all fields');
-                    return;
-                }
-
-                // Pediatric dose validation
-                if ((state.ageGroup === 'Child' || state.ageGroup === 'Teenager') && state.pediatricWeight) {
-                    const weight = parseFloat(state.pediatricWeight);
-                    const maxDose = state.ageGroup === 'Child' ? 20 : 40;
-                    if (dose > maxDose) {
-                        state.showPediatricDoseWarning = true;
-                        state.pendingDoseAction = {
-                            message: `You entered ${dose} units. This seems high for a ${state.ageGroup.toLowerCase()}. Please verify this is correct before proceeding.`,
-                            callback: 'finalizeMealtimeRecommendation'
-                        };
-                        render();
-                        return;
-                    }
-                }
-
-                this.finalizeMealtimeRecommendation();
-            },
-
-            finalizeMealtimeRecommendation() {
-                const insulinType = document.getElementById('rapid-insulin-type').value;
-                const dose = parseFloat(document.getElementById('rapid-dose').value);
-                const breakfastPre = parseInt(document.getElementById('rapid-breakfast-pre').value);
-                const breakfastPost = parseInt(document.getElementById('rapid-breakfast-post').value);
-                const lunchPre = parseInt(document.getElementById('rapid-lunch-pre').value);
-                const lunchPost = parseInt(document.getElementById('rapid-lunch-post').value);
-                const dinnerPre = parseInt(document.getElementById('rapid-dinner-pre').value);
-                const dinnerPost = parseInt(document.getElementById('rapid-dinner-post').value);
-
-                const insulin = RAPID_INSULINS.find(i => i.id === insulinType);
-                const thresholds = getAgeThresholds();
-
-                const meals = [
-                    { name: 'Breakfast', pre: breakfastPre, post: breakfastPost, carbLevel: state.mealState.breakfast.carbLevel },
-                    { name: 'Lunch', pre: lunchPre, post: lunchPost, carbLevel: state.mealState.lunch.carbLevel },
-                    { name: 'Dinner', pre: dinnerPre, post: dinnerPost, carbLevel: state.mealState.dinner.carbLevel }
-                ];
-
-                let recommendation_html = `
-                    <div class="recommendation-result">
-                        <div style="margin-bottom: 1rem;">
-                            <strong>Insulin Type:</strong> ${insulin.name}<br>
-                            <strong>Onset Time:</strong> ${insulin.onsetTime}<br>
-                            <strong>Peak Time:</strong> ${insulin.peakTime}<br>
-                            <strong>Duration:</strong> ${insulin.duration}
-                        </div>
-                `;
-
-                // Analyze each meal
-                let highCarbHighBGMeals = [];
-                meals.forEach(meal => {
-                    if (meal.post > thresholds.mealHigh && meal.carbLevel === 'high') {
-                        highCarbHighBGMeals.push(meal.name);
-                    }
-                });
-
-                if (highCarbHighBGMeals.length > 0) {
-                    recommendation_html += `
-                        <div class="alert alert-warning" style="margin-bottom: 1rem;">
-                            <strong>Carb Context Alert:</strong>
-                            ${highCarbHighBGMeals.map(meal => `${meal} had high carb intake which may explain the elevated post-meal reading.`).join(' ')}
-                        </div>
-                    `;
-                }
-
-                // General recommendation
-                const avgPost = (breakfastPost + lunchPost + dinnerPost) / 3;
-                let recommendation = '';
-                if (avgPost > thresholds.mealHigh) {
-                    const newDose = (dose * 1.1).toFixed(1);
-                    recommendation = `Post-meal readings are consistently high. You may want to consider a 10% increase to ${newDose} units.`;
-                } else if (meals.some(m => m.post < thresholds.mealLow)) {
-                    const newDose = (dose * 0.9).toFixed(1);
-                    recommendation = `Some post-meal readings are low. You may want to consider a 10% decrease to ${newDose} units.`;
-                } else {
-                    recommendation = `Post-meal readings appear relatively controlled. Continue monitoring and discuss trends with your provider.`;
-                }
-
-                recommendation_html += `
-                    <div class="alert-callout">
-                        <strong>Provider Discussion Required:</strong> This is educational guidance only. ${recommendation}
-                    </div>
-                    <label style="display: flex; align-items: center; margin-top: 1rem; gap: 0.75rem;">
-                        <input type="checkbox" id="rapid-reveal-checkbox" onchange="app.toggleRapidBlur()" aria-label="I understand the limitation" />
-                        <span>I understand and want to see the recommendation</span>
-                    </label>
-                    <div id="rapid-recommendation-blurred" class="recommendation-blurred" style="margin-top: 1rem; padding: 1rem; background: var(--gray-100); border-radius: 0.375rem;">
-                        <strong>Recommendation:</strong> ${recommendation}
-                    </div>
-                </div>
-                `;
-
-                document.getElementById('rapid-result').innerHTML = recommendation_html;
-                document.getElementById('rapid-result').style.display = 'block';
-                state.showPediatricDoseWarning = false;
-            },
-
-            confirmPediatricDose() {
-                state.showPediatricDoseWarning = false;
-                this.finalizeMealtimeRecommendation();
-            },
-
-            cancelPediatricDose() {
-                state.showPediatricDoseWarning = false;
-                state.pendingDoseAction = null;
-                render();
-            },
-
             openDDS4Modal() {
                 state.showDDS4Modal = true;
                 render();
@@ -5148,21 +4164,13 @@
                 if (profileIndex < 0 || profileIndex >= state.profiles.length) return;
 
                 // Save current profile data
-                state.profiles[state.currentProfileIndex].ageGroup = state.ageGroup;
-                state.profiles[state.currentProfileIndex].weight = state.pediatricWeight;
                 localStorage.setItem('tdb_profiles', JSON.stringify(state.profiles));
 
                 // Load new profile
                 state.currentProfileIndex = profileIndex;
                 const newProfile = state.profiles[profileIndex];
-                state.ageGroup = newProfile.ageGroup || 'Adult';
-                state.pediatricWeight = newProfile.weight || '';
 
                 localStorage.setItem('tdb_current_profile', profileIndex);
-                localStorage.setItem('tdb_age_group', state.ageGroup);
-                if (state.pediatricWeight) {
-                    localStorage.setItem('tdb_pediatric_weight', state.pediatricWeight);
-                }
 
                 auditLog('Profile switched', { profileName: newProfile.name });
                 addToast(`Switched to profile: ${newProfile.name}`, 'success');
@@ -5179,8 +4187,6 @@
 
                 state.profiles.push({
                     name: profileName.trim(),
-                    ageGroup: 'Adult',
-                    weight: '',
                     data: {}
                 });
                 localStorage.setItem('tdb_profiles', JSON.stringify(state.profiles));
@@ -5272,8 +4278,6 @@
                     [],
                     ['PROFILE'],
                     ['Name', profileData.name || 'N/A'],
-                    ['Age Group', state.ageGroup],
-                    ['Weight (kg)', state.pediatricWeight || 'N/A'],
                     [],
                     ['LEARNING HISTORY'],
                     ['Topics Read', state.topicsRead.length],
@@ -5314,9 +4318,7 @@
                 const exportData = {
                     exportDate: new Date().toISOString(),
                     profile: {
-                        name: state.profiles[state.currentProfileIndex]?.name || 'Default',
-                        ageGroup: state.ageGroup,
-                        weight: state.pediatricWeight || null
+                        name: state.profiles[state.currentProfileIndex]?.name || 'Default'
                     },
                     learning: {
                         topicsRead: state.topicsRead,
@@ -5487,153 +4489,6 @@
                 }
             },
 
-            // DC-029: Parental Controls
-            openParentPINSetupModal() {
-                state.showParentPINSetup = true;
-                state.parentPinInput = '';
-                render();
-            },
-
-            submitParentPINSetup() {
-                if (state.parentPinInput.length !== 4 || !/^\d{4}$/.test(state.parentPinInput)) {
-                    addToast('Parent PIN must be exactly 4 digits', 'error');
-                    return;
-                }
-
-                state.parentPin = hashPin(state.parentPinInput);
-                state.parentControlsEnabled = true;
-                state.parentPinInput = '';
-                state.showParentPINSetup = false;
-                localStorage.setItem('tdb_parent_pin', state.parentPin);
-                addToast('Parental controls enabled', 'success');
-                render();
-            },
-
-            changeParentPIN() {
-                const currentPin = prompt('Enter current parent PIN:');
-                if (!currentPin) return;
-
-                if (!verifyPin(currentPin, state.parentPin)) {
-                    addToast('Incorrect parent PIN', 'error');
-                    return;
-                }
-
-                const newPin = prompt('Enter new parent PIN (4 digits):');
-                if (!newPin || newPin.length !== 4 || !/^\d{4}$/.test(newPin)) {
-                    addToast('PIN must be exactly 4 digits', 'error');
-                    return;
-                }
-
-                state.parentPin = hashPin(newPin);
-                localStorage.setItem('tdb_parent_pin', state.parentPin);
-                addToast('Parent PIN changed successfully', 'success');
-                render();
-            },
-
-            removeParentPIN() {
-                const pin = prompt('Enter parent PIN to disable parental controls:');
-                if (!pin) return;
-
-                if (!verifyPin(pin, state.parentPin)) {
-                    addToast('Incorrect parent PIN', 'error');
-                    return;
-                }
-
-                if (confirm('Disable parental controls?')) {
-                    state.parentPin = null;
-                    state.parentControlsEnabled = false;
-                    localStorage.removeItem('tdb_parent_pin');
-                    addToast('Parental controls disabled', 'success');
-                    render();
-                }
-            },
-
-            // DC-030: School & Camp Context
-            setSchoolCampMode(enabled) {
-                state.schoolCampMode = enabled;
-                localStorage.setItem('tdb_school_camp_mode', enabled);
-                addToast(`School/Camp mode ${enabled ? 'enabled' : 'disabled'}`, 'success');
-                render();
-            },
-
-            setSchoolNurseName(name) {
-                state.schoolNurseName = name;
-                localStorage.setItem('tdb_school_nurse_name', name);
-            },
-
-            setSchoolNursePhone(phone) {
-                state.schoolNursePhone = phone;
-                localStorage.setItem('tdb_school_nurse_phone', phone);
-            },
-
-            setEmergencyContactName(name) {
-                state.emergencyContactName = name;
-                localStorage.setItem('tdb_emergency_contact_name', name);
-            },
-
-            setEmergencyContactPhone(phone) {
-                state.emergencyContactPhone = phone;
-                localStorage.setItem('tdb_emergency_contact_phone', phone);
-            },
-
-            openSchoolHealthPlanModal() {
-                state.showSchoolHealthPlanModal = true;
-                render();
-            },
-
-            closeSchoolHealthPlanModal() {
-                state.showSchoolHealthPlanModal = false;
-                render();
-            },
-
-            printSchoolHealthPlan() {
-                const plannedContent = `
-SCHOOL HEALTH PLAN - ${state.profiles[state.currentProfileIndex]?.name || 'Student'}
-
-STUDENT INFORMATION
-Age: ${state.ageGroup}
-Profile: ${state.profiles[state.currentProfileIndex]?.name || 'Default'}
-
-SCHOOL NURSE
-Name: ${state.schoolNurseName || 'Not provided'}
-Phone: ${state.schoolNursePhone || 'Not provided'}
-
-EMERGENCY CONTACT
-Name: ${state.emergencyContactName || 'Not provided'}
-Phone: ${state.emergencyContactPhone || 'Not provided'}
-
-SCHEDULED CHECK TIMES
-${state.scheduledCheckTimes.length > 0 ? state.scheduledCheckTimes.map(t => '- ' + t).join('\\n') : '- Before lunch\\n- After school'}
-
-LOW BLOOD SUGAR ACTION PLAN
-1. Recognize the warning signs: shakiness, sweating, fast heartbeat, anxiety, hunger
-2. Immediately eat or drink 15 grams of fast-acting carbohydrates
-   - 4 glucose tablets
-   - 4 oz juice or regular soda
-   - 1 tablespoon honey
-   - 6 hard candies
-3. Wait 15 minutes and recheck blood sugar
-4. If still low, repeat the 15-gram snack
-5. Eat a meal or snack with protein and carbs when blood sugar is above 70
-
-HIGH BLOOD SUGAR ACTION PLAN
-1. Recognize the signs: thirst, frequent urination, tiredness, difficulty concentrating
-2. Check blood sugar to confirm
-3. Contact school nurse - may need insulin adjustment
-4. Drink water (not sugar-sweetened beverages)
-5. Continue normal activities unless directed otherwise
-6. Report pattern to healthcare provider
-
-EMERGENCY CONTACTS
-- School Nurse: ${state.schoolNursePhone || 'Call office'}
-- Parent/Guardian: ${state.emergencyContactPhone || 'Contact school'}
-- Healthcare Provider: [Have student/parent provide]
-
-Generated from The Diabetes Brief - Education, not extremes
-                `;
-                alert('Printable School Health Plan:\\n' + plannedContent + '\\n\\nUse your browser Print function (Ctrl+P or Cmd+P) to print this.');
-            },
-
             // Helper methods for modals and UI
             closePINSetupModal() {
                 state.showPINSetup = false;
@@ -5655,11 +4510,6 @@ Generated from The Diabetes Brief - Education, not extremes
                 state.dataEncryptionEnabled = true;
                 auditLog('PIN set', {});
                 addToast('PIN set successfully! App is now locked.', 'success');
-                render();
-            },
-
-            updateParentPINInput(value) {
-                state.parentPinInput = value.slice(0, 4).replace(/[^0-9]/g, '');
                 render();
             },
 
