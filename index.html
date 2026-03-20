@@ -1460,6 +1460,7 @@
             { id: 21, title: 'The Power of Walking After Meals', content: 'A 10-15 minute walk after eating can lower post-meal blood sugar by 20-30%. Your muscles use glucose for fuel during movement, pulling it directly from your bloodstream. This is one of the simplest, most effective lifestyle tools for blood sugar management — no equipment needed.' },
             { id: 22, title: 'Weight Management and Insulin Resistance', content: 'Even modest weight loss (5-7% of body weight) can significantly improve insulin sensitivity and lower blood sugar. Focus on sustainable changes rather than crash diets. Combining balanced eating with regular movement is more effective long-term than either alone.' },
             { id: 23, title: 'Building a Support System', content: 'Diabetes management is easier with support. Tell close friends and family what you need — whether it is meal planning help, exercise partners, or simply understanding. Online communities, local support groups, and diabetes educators can also provide valuable connection and accountability.' },
+            { id: 24, title: 'When to Call Your Provider', content: 'Know when to seek medical help. Call your provider if: fasting blood sugar is consistently above 180 mg/dL for more than 2-3 days, you experience frequent low blood sugar episodes (below 70 mg/dL) more than twice a week, you have signs of infection (fever, wounds that won\'t heal, frequent urinary tract infections), you notice sudden vision changes or persistent numbness/tingling in your feet, you feel persistently nauseous or are vomiting, your A1C is rising despite following your plan, or you feel overwhelmed and need a medication adjustment. Go to the ER if blood sugar is above 300 mg/dL and you feel ill, if you cannot keep food or fluids down, if you have fruity-smelling breath with nausea (possible DKA), or if blood sugar drops below 54 mg/dL and does not respond to treatment.' },
             // Core diabetes knowledge
             { id: 9, title: 'Nutrition and Meal Planning', content: 'Balanced meals with protein, fat, and fiber help stabilize blood sugar. Consistent meal timing supports more predictable insulin needs.' },
             { id: 5, title: 'Exercise and Diabetes', content: 'Exercise increases insulin sensitivity and lowers blood sugar. You may need to adjust insulin doses on days you exercise more than usual.' },
@@ -2083,6 +2084,18 @@
                     { heading: 'Your Healthcare Team', content: 'Your support system includes your healthcare team: primary care provider, endocrinologist, diabetes educator, pharmacist, dietitian, and mental health professional. You deserve a team that listens, respects your goals, and works with you. If you feel dismissed or unheard, it is okay to seek a new provider.' },
                 ]
             },
+            {
+                id: 'when-to-call-provider',
+                title: 'When to Call Your Provider',
+                icon: '📞',
+                category: 'Urgent Care',
+                sections: [
+                    { heading: 'Call Your Provider If...', content: 'Fasting blood sugar is consistently above 180 mg/dL for 2-3+ days. You have frequent lows (below 70 mg/dL) more than twice a week. You notice signs of infection: fever, wounds that will not heal, or frequent UTIs. You have sudden vision changes or persistent numbness/tingling in your feet. Your A1C is rising despite following your plan.' },
+                    { heading: 'Go to the ER If...', content: 'Blood sugar is above 300 mg/dL and you feel ill (nausea, vomiting, confusion). You cannot keep food or fluids down for more than 6 hours. You have fruity-smelling breath with nausea or stomach pain (possible diabetic ketoacidosis). Blood sugar drops below 54 mg/dL and does not respond to the 15-15 rule. You feel confused, disoriented, or lose consciousness.' },
+                    { heading: 'Before Your Appointment', content: 'Bring your blood sugar log (or phone with readings). Write down your questions beforehand. Note any new symptoms, medication side effects, or lifestyle changes. Know your current medications and doses. Ask about your A1C, blood pressure, and cholesterol at each visit. Discuss any barriers to your management plan.' },
+                    { heading: 'Regular Check-Up Schedule', content: 'Every 3-6 months: A1C test, medication review, blood sugar log review. Annually: comprehensive eye exam, foot exam, kidney function (urine albumin, eGFR), lipid panel, dental exam. As needed: diabetes education refresher, mental health screening, nutrition counseling. Keep a calendar reminder for these appointments.' },
+                ]
+            },
         ];
 
         // DC-034: Translations for Spanish Language Support
@@ -2404,6 +2417,7 @@
             feedbackRating: 0,
             feedbackText: '',
             feedbackSubmitted: false,
+            settingsExpanded: {},
             // DC-034: Spanish Language Support
             language: localStorage.getItem('tdb_language') || 'en',
         };
@@ -2607,7 +2621,7 @@
                             <button class="header-btn" onclick="app.openAddProfileModal()" aria-label="Add profile" style="font-size: 1rem;">+</button>
                         </div>
                         <div>
-                            <button class="header-btn" onclick="app.toggleLanguage()" aria-label="Toggle Language" style="font-weight: bold;">${state.language.toUpperCase()}</button>
+                            <button class="header-btn" onclick="app.toggleLanguage()" aria-label="${state.language === 'en' ? 'Switch to Spanish' : 'Cambiar a inglés'}" style="font-weight: bold;">${state.language.toUpperCase()}</button>
                             <button class="header-btn" onclick="app.openProviderSummary()" aria-label="Provider Summary">📋</button>
                             <button class="header-btn" onclick="app.openHelpModal()" aria-label="Help">?</button>
                             <button class="header-btn" onclick="app.openPrivacyModal()" aria-label="Privacy Policy">🔒</button>
@@ -2615,7 +2629,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="disclaimer-banner">⚠️ For educational purposes only. Not medical advice. Not for emergencies — call 911.</div>
+                <div class="disclaimer-banner">${t('app.disclaimer')} Not for emergencies — call 911.</div>
+                ${state.language === 'es' ? `<div style="background: var(--primary-light); color: var(--primary-dark); padding: 0.5rem 1rem; text-align: center; font-size: 0.85rem; font-weight: 500;">🌐 Nota: La navegación está en español, pero el contenido educativo está disponible solo en inglés por ahora.</div>` : ''}
             `;
             return headerHTML;
         }
@@ -2690,7 +2705,7 @@
                         role="button"
                         tabindex="0"
                         onkeypress="if (event.key === 'Enter' || event.key === ' ') app.toggleTopic('${topic.id}')"
-                        aria-label="${topic.title}"
+                        aria-expanded="${isExpanded}"
                     >
                         <div style="display: flex; align-items: center; gap: 0.5rem;">
                             <div class="topic-title" style="margin: 0; flex: 1;">${topic.title}</div>
@@ -2771,48 +2786,63 @@
 
             if (showResults) {
                 const percentage = Math.round((score / QUIZ_QUESTIONS.length) * 100);
-                let feedback = 'Good effort! Keep studying to improve.';
+                const correct = score;
+                const total = QUIZ_QUESTIONS.length;
+                let feedback, feedbackIcon;
                 if (percentage >= 80) {
-                    feedback = 'Excellent! You have a strong understanding of diabetes management.';
+                    feedback = 'You have a strong foundation in diabetes self-management. Keep building on what you know!';
+                    feedbackIcon = '🌟';
                 } else if (percentage >= 60) {
-                    feedback = 'Good progress! Review the topics below to strengthen your knowledge.';
+                    feedback = 'You\'re making great progress! Explore the topics below to deepen your understanding.';
+                    feedbackIcon = '📈';
+                } else {
+                    feedback = 'Every expert was once a beginner. The topics below are great areas to explore next!';
+                    feedbackIcon = '🌱';
                 }
 
                 let html = `
                     <div class="result-container">
-                        <div class="result-score">${percentage}%</div>
-                        <div class="result-label">Your Score</div>
+                        <div class="result-score">${correct} of ${total}</div>
+                        <div class="result-label">Questions Answered Correctly</div>
                     </div>
                     <div class="result-feedback">
-                        <strong>Feedback:</strong> ${feedback}
+                        <strong>${feedbackIcon} ${feedback}</strong>
                     </div>
                 `;
 
-                // Find wrong answers
-                const wrongAnswers = [];
+                // Find areas to explore
+                const areasToExplore = [];
                 for (let i = 0; i < QUIZ_QUESTIONS.length; i++) {
                     const selectedId = selectedAnswers[i];
                     const q = QUIZ_QUESTIONS[i];
                     const selectedOption = q.options.find(opt => opt.id === selectedId);
                     if (!selectedOption || !selectedOption.correct) {
-                        wrongAnswers.push(q.question);
+                        areasToExplore.push(q.question);
                     }
                 }
 
-                if (wrongAnswers.length > 0) {
+                if (areasToExplore.length > 0) {
                     html += `
-                        <div class="alert alert-warning">
-                            <div class="alert-title">Review These Topics:</div>
+                        <div class="alert alert-warning" style="border-left-color: var(--primary);">
+                            <div class="alert-title">📚 Areas to Explore:</div>
+                            <p style="font-size: 0.85rem; color: var(--gray-600); margin-bottom: 0.75rem;">These topics are worth revisiting in the Education Hub:</p>
                             <ul style="margin-left: 1.5rem;">
-                                ${wrongAnswers.map(q => `<li>${q}</li>`).join('')}
+                                ${areasToExplore.map(q => `<li>${q}</li>`).join('')}
                             </ul>
+                        </div>
+                    `;
+                } else {
+                    html += `
+                        <div class="alert" style="background: var(--green-50, #f0fdf4); border-left: 4px solid var(--success);">
+                            <div class="alert-title">🎉 Perfect Score!</div>
+                            <p style="font-size: 0.85rem; color: var(--gray-600);">You answered every question correctly. Outstanding knowledge!</p>
                         </div>
                     `;
                 }
 
                 html += `
                     <button class="btn btn-primary" onclick="app.resetQuiz()" style="width: 100%; margin-top: 1rem;">
-                        Take Quiz Again
+                        Practice Again
                     </button>
                 `;
                 return html;
@@ -3065,8 +3095,8 @@
 
                 ${knowledgeGaps.length > 0 ? `
                     <div class="card">
-                        <h3 class="card-title" style="font-size: 1.1rem;">Knowledge Gaps to Address</h3>
-                        <p style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 1rem;">Topics where you had incorrect answers:</p>
+                        <h3 class="card-title" style="font-size: 1.1rem;">📚 Areas to Explore</h3>
+                        <p style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 1rem;">These topics are worth revisiting to strengthen your understanding:</p>
                         ${knowledgeGaps.map(gap => `<div class="knowledge-gap">${gap}</div>`).join('')}
                     </div>
                 ` : ''}
@@ -3376,203 +3406,170 @@
         function renderSettingsTab() {
             const topicsRead = localStorage.getItem('tdb_topics_read') || '0';
             const quizzesCompleted = localStorage.getItem('tdb_quizzes_completed') || '0';
+            const s = state.settingsExpanded || {};
 
             let html = `
+                <!-- My Progress -->
                 <div class="card">
-                    <h2 class="card-title">Settings & Profile</h2>
-
-                    <div class="settings-section">
-                        <div class="settings-title">Usage Statistics</div>
-                        <div style="background: var(--blue-50); padding: 1rem; border-radius: 0.375rem; margin-bottom: 1rem;">
-                            <div style="margin-bottom: 0.5rem;">📚 Topics Read: <strong>${topicsRead}</strong></div>
-                            <div>✅ Quizzes Completed: <strong>${quizzesCompleted}</strong></div>
-                        </div>
-                    </div>
-
-                    <div class="settings-section">
-                        <div class="settings-title">Wellness Check</div>
-                        <p style="margin-bottom: 1rem; color: var(--gray-600);">Monthly screening for diabetes distress (takes 2 minutes)</p>
-                        <button class="btn btn-secondary" onclick="app.openDDS4Modal()">Start Wellness Check</button>
-                    </div>
-
-                    <div class="settings-section">
-                        <div class="settings-title">Adverse Event Reports</div>
-                        ${state.adverseEvents.length > 0 ? `
-                            <div style="margin-bottom: 1rem;">
-                                <p style="color: var(--gray-600); margin-bottom: 1rem;">You have ${state.adverseEvents.length} report(s).</p>
-                                <button class="btn btn-secondary" onclick="app.downloadAdverseEvents()">Download Reports</button>
-                                <button class="btn btn-danger btn-small" onclick="app.clearAdverseEvents()" style="margin-left: 0.5rem;">Clear</button>
-                            </div>
-                        ` : `
-                            <p style="color: var(--gray-600); margin-bottom: 1rem;">No reports yet.</p>
-                        `}
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h2 class="card-title">🔐 Security</h2>
-
-                    <div class="settings-section">
-                        <div class="settings-title">PIN Protection</div>
-                        <p style="margin-bottom: 1rem; color: var(--gray-600);">Protect your data with a 4-digit PIN lock.</p>
-                        ${state.userPin ? `
-                            <button class="btn btn-secondary" onclick="app.changePIN()">Change PIN</button>
-                            <button class="btn btn-danger btn-small" onclick="app.removePIN()" style="margin-left: 0.5rem;">Remove PIN</button>
-                        ` : `
-                            <button class="btn btn-secondary" onclick="app.openPINSetupModal()">Set PIN</button>
-                        `}
-                    </div>
-
-                    <div class="settings-section">
-                        <div class="settings-title">Data Encryption (DC-032)</div>
-                        <p style="margin-bottom: 1rem; color: var(--gray-600);">Your sensitive data is encrypted using your PIN as the key.</p>
-                        <div style="background: ${state.userPin ? 'var(--success)' : 'var(--warning)'}20; padding: 0.75rem; border-radius: 0.375rem; margin-bottom: 1rem;">
-                            <strong style="color: ${state.userPin ? 'var(--success)' : 'var(--warning)'};">Status: ${state.userPin ? '🔒 Encrypted' : '🔓 Unencrypted'}</strong>
-                        </div>
-                        ${state.userPin ? `<p style="font-size: 0.9rem; color: var(--gray-600);">Your data (adverse events, quiz history, CGM data) will be encrypted and decrypted with your PIN.</p>` : `<p style="font-size: 0.9rem; color: var(--gray-600);">Set a PIN above to enable data encryption.</p>`}
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h2 class="card-title">📊 CGM Data Import</h2>
-                    <p style="color: var(--gray-600); margin-bottom: 1rem;">Import continuous glucose monitor data from CSV file.</p>
-
-                    <div class="settings-section">
-                        <label class="form-label">Supported Formats:</label>
-                        <div style="background: var(--gray-50); padding: 1rem; border-radius: 0.375rem; font-size: 0.9rem; color: var(--gray-700);">
-                            <p><strong>Dexcom:</strong> Timestamp, Glucose Value (mg/dL)</p>
-                            <p><strong>Libre:</strong> Device Timestamp, Historic Glucose mg/dL</p>
-                            <p><strong>Generic:</strong> Any columns with "time/date/timestamp" and "glucose/bg/sugar/mg"</p>
-                        </div>
-                    </div>
-
-                    <div class="settings-section">
-                        <input type="file" id="cgm-file-input" accept=".csv" onchange="app.handleCGMFileUpload(event)" style="display: none;" />
-                        <button class="btn btn-secondary" onclick="document.getElementById('cgm-file-input').click()">Upload CSV File</button>
-                    </div>
-
-                    ${state.cgmImportSummary ? `
-                        <div class="cgm-summary">
-                            <div class="cgm-stat">
-                                <span class="cgm-stat-label">Readings Imported:</span>
-                                <span class="cgm-stat-value">${state.cgmImportSummary.count}</span>
-                            </div>
-                            <div class="cgm-stat">
-                                <span class="cgm-stat-label">Date Range:</span>
-                                <span class="cgm-stat-value">${state.cgmImportSummary.dateRange}</span>
-                            </div>
-                            <div class="cgm-stat">
-                                <span class="cgm-stat-label">Average Glucose:</span>
-                                <span class="cgm-stat-value">${state.cgmImportSummary.average} mg/dL</span>
-                            </div>
-                            <div class="cgm-stat">
-                                <span class="cgm-stat-label">Range:</span>
-                                <span class="cgm-stat-value">${state.cgmImportSummary.min}-${state.cgmImportSummary.max} mg/dL</span>
-                            </div>
-                            <div class="cgm-stat">
-                                <span class="cgm-stat-label">In Range (70-180):</span>
-                                <span class="cgm-stat-value" style="color: var(--success);">${state.cgmImportSummary.inRangePercent}%</span>
-                            </div>
-                            <div class="cgm-stat">
-                                <span class="cgm-stat-label">Below Range:</span>
-                                <span class="cgm-stat-value" style="color: var(--warning);">${state.cgmImportSummary.belowPercent}%</span>
-                            </div>
-                            <div class="cgm-stat">
-                                <span class="cgm-stat-label">Above Range:</span>
-                                <span class="cgm-stat-value" style="color: var(--danger);">${state.cgmImportSummary.abovePercent}%</span>
+                    <h2 class="card-title" onclick="app.toggleSettingsSection('progress')" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                        My Progress & Wellness
+                        <span style="font-size: 0.8rem; color: var(--gray-500);">${s.progress === false ? '▶' : '▼'}</span>
+                    </h2>
+                    ${s.progress !== false ? `
+                        <div class="settings-section">
+                            <div style="background: var(--blue-50); padding: 1rem; border-radius: 0.375rem; margin-bottom: 1rem;">
+                                <div style="margin-bottom: 0.5rem;">📚 Topics Read: <strong>${topicsRead}</strong></div>
+                                <div>✅ Quizzes Completed: <strong>${quizzesCompleted}</strong></div>
                             </div>
                         </div>
-
-                        <div style="margin-bottom: 1rem;">
-                            <label class="form-label">Daily Summary:</label>
-                            <div class="cgm-daily-summary">${state.cgmImportSummary.dailySummary}</div>
+                        <div class="settings-section">
+                            <div class="settings-title">Wellness Check</div>
+                            <p style="margin-bottom: 1rem; color: var(--gray-600);">Monthly screening for diabetes distress (takes 2 minutes)</p>
+                            <button class="btn btn-secondary" onclick="app.openDDS4Modal()">Start Wellness Check</button>
                         </div>
-
-                        <button class="btn btn-danger btn-small" onclick="app.clearCGMData()">Clear Imported Data</button>
-                    ` : `
-                        <p style="color: var(--gray-600); font-style: italic;">No data imported yet. Upload a CSV file to see analytics.</p>
-                    `}
-                </div>
-
-                <div class="card">
-                    <h2 class="card-title">About The Diabetes Brief</h2>
-                    <p style="margin-bottom: 1rem; color: var(--gray-600);">Education, not extremes. Learn more and connect with us on social media.</p>
-                    <p style="color: var(--gray-600); font-size: 0.9rem;">📱 Find us: <strong>@thediabetesbrief</strong></p>
-                </div>
-
-                <div class="card">
-                    <h2 class="card-title">Share Your Feedback</h2>
-                    <p style="margin-bottom: 1rem; color: var(--gray-600);">Help us improve The Diabetes Brief. Your feedback is stored locally and can be exported with your data.</p>
-                    ${state.feedbackSubmitted ? `
-                        <div style="background: var(--green-50, #f0fdf4); border: 1px solid var(--green-200, #bbf7d0); border-radius: 0.5rem; padding: 1rem; text-align: center;">
-                            <p style="color: var(--green-700, #15803d); font-weight: 600; margin-bottom: 0.25rem;">Thank you for your feedback!</p>
-                            <p style="color: var(--gray-600); font-size: 0.85rem;">Your response has been saved.</p>
-                            <button class="btn btn-secondary" onclick="app.resetFeedback()" style="margin-top: 0.75rem; font-size: 0.85rem;">Submit Another</button>
-                        </div>
-                    ` : `
-                        <div style="margin-bottom: 1rem;">
-                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem;">How would you rate your experience?</label>
-                            <div style="display: flex; gap: 0.5rem;">
-                                ${[1,2,3,4,5].map(n => `
-                                    <button onclick="app.setFeedbackRating(${n})" style="width: 2.5rem; height: 2.5rem; border-radius: 50%; border: 2px solid ${state.feedbackRating >= n ? 'var(--primary)' : 'var(--gray-300)'}; background: ${state.feedbackRating >= n ? 'var(--primary-light)' : 'white'}; cursor: pointer; font-size: 1.1rem; color: ${state.feedbackRating >= n ? 'var(--primary)' : 'var(--gray-400)'}; font-weight: 600;">${n}</button>
-                                `).join('')}
-                            </div>
-                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--gray-500); margin-top: 0.25rem; padding: 0 0.25rem;">
-                                <span>Not useful</span><span>Very useful</span>
-                            </div>
-                        </div>
-                        <div style="margin-bottom: 1rem;">
-                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem;">What could we improve?</label>
-                            <textarea id="feedback-text" rows="3" placeholder="Tell us what you think..." style="width: 100%; padding: 0.75rem; border: 1px solid var(--gray-300); border-radius: 0.375rem; font-family: inherit; font-size: 0.9rem; resize: vertical; box-sizing: border-box;" oninput="app.updateFeedbackText(this.value)">${state.feedbackText}</textarea>
-                        </div>
-                        <button class="btn btn-primary" onclick="app.submitFeedback()" ${state.feedbackRating === 0 ? 'disabled' : ''} style="width: 100%;">Submit Feedback</button>
-                    `}
-                </div>
-
-                <div class="card">
-                    <h2 class="card-title">Food Access & Affordability</h2>
-                    <p style="margin-bottom: 1rem; color: var(--gray-600);">Check in on food security and access to diabetes-friendly foods.</p>
-                    <button class="btn btn-secondary" onclick="app.openFoodInsecurityScreening()" style="margin-bottom: 0.5rem;">Food Security Check-in</button>
-                    <div style="font-size: 0.85rem; color: var(--gray-600); margin-top: 0.5rem;">Last checked: ${state.foodInsecurityLastChecked ? new Date(parseInt(state.foodInsecurityLastChecked)).toLocaleDateString() : 'Never'}</div>
-                </div>
-
-                <div class="card">
-                    <h2 class="card-title">Export My Data</h2>
-                    <p style="margin-bottom: 1rem; color: var(--gray-600);">Download your profile data, quiz history, and activities for your records or to share with your healthcare provider.</p>
-                    <button class="btn btn-secondary" onclick="app.exportDataCSV()" style="margin-right: 0.5rem;">Export as CSV</button>
-                    <button class="btn btn-secondary" onclick="app.exportDataJSON()">Export as JSON</button>
-                </div>
-
-                <div class="card">
-                    <h2 class="card-title">📋 Audit Log (DC-033)</h2>
-                    <p style="margin-bottom: 1rem; color: var(--gray-600);">View your app activity history for compliance and security.</p>
-                    <button class="btn btn-secondary" onclick="app.toggleAuditLog()" style="margin-right: 0.5rem;">View Audit Log</button>
-                    <button class="btn btn-secondary" onclick="app.exportAuditLog()">Export Audit Log</button>
-
-                    ${state.showAuditLog ? `
-                        <div style="margin-top: 1rem; background: var(--gray-50); border-radius: 0.375rem; padding: 1rem; max-height: 400px; overflow-y: auto;">
-                            ${(() => {
-                                const auditLog = JSON.parse(localStorage.getItem('tdb_audit_log') || '[]');
-                                if (auditLog.length === 0) {
-                                    return '<p style="color: var(--gray-600); font-style: italic;">No audit log entries yet.</p>';
-                                }
-                                const lastEntries = auditLog.slice(-50).reverse();
-                                return '<div style="font-size: 0.85rem;">' + lastEntries.map(entry => {
-                                    const time = new Date(entry.timestamp).toLocaleString();
-                                    return `<div style="margin-bottom: 0.75rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--gray-200);">
-                                        <strong>${entry.action}</strong> <span style="color: var(--gray-600); font-size: 0.8rem;">${time}</span>
-                                        ${entry.profile ? `<span style="color: var(--blue-600); margin-left: 0.5rem;">[${entry.profile}]</span>` : ''}
-                                        ${Object.keys(entry.details).length > 0 ? `<div style="margin-top: 0.25rem; color: var(--gray-600);">${JSON.stringify(entry.details)}</div>` : ''}
-                                    </div>`;
-                                }).join('') + '</div>';
-                            })()}
+                        <div class="settings-section">
+                            <div class="settings-title">Food Access & Affordability</div>
+                            <p style="margin-bottom: 0.5rem; color: var(--gray-600);">Check in on food security and access to diabetes-friendly foods.</p>
+                            <button class="btn btn-secondary" onclick="app.openFoodInsecurityScreening()" style="margin-bottom: 0.5rem;">Food Security Check-in</button>
+                            <div style="font-size: 0.85rem; color: var(--gray-600); margin-top: 0.5rem;">Last checked: ${state.foodInsecurityLastChecked ? new Date(parseInt(state.foodInsecurityLastChecked)).toLocaleDateString() : 'Never'}</div>
                         </div>
                     ` : ''}
                 </div>
 
+                <!-- Feedback -->
                 <div class="card">
-                    <h2 class="card-title">Help & Legal</h2>
-                    <button class="btn btn-secondary" onclick="app.openPrivacyModal()" style="width: 100%; margin-bottom: 0.5rem;">Privacy Policy</button>
+                    <h2 class="card-title" onclick="app.toggleSettingsSection('feedback')" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                        Share Your Feedback
+                        <span style="font-size: 0.8rem; color: var(--gray-500);">${s.feedback === false ? '▶' : '▼'}</span>
+                    </h2>
+                    ${s.feedback !== false ? `
+                        <p style="margin-bottom: 1rem; color: var(--gray-600);">Help us improve The Diabetes Brief.</p>
+                        ${state.feedbackSubmitted ? `
+                            <div style="background: var(--green-50, #f0fdf4); border: 1px solid var(--green-200, #bbf7d0); border-radius: 0.5rem; padding: 1rem; text-align: center;">
+                                <p style="color: var(--green-700, #15803d); font-weight: 600; margin-bottom: 0.25rem;">Thank you for your feedback!</p>
+                                <p style="color: var(--gray-600); font-size: 0.85rem;">Your response has been saved.</p>
+                                <button class="btn btn-secondary" onclick="app.resetFeedback()" style="margin-top: 0.75rem; font-size: 0.85rem;">Submit Another</button>
+                            </div>
+                        ` : `
+                            <div style="margin-bottom: 1rem;">
+                                <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem;">How would you rate your experience?</label>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    ${[1,2,3,4,5].map(n => `
+                                        <button onclick="app.setFeedbackRating(${n})" style="width: 2.5rem; height: 2.5rem; border-radius: 50%; border: 2px solid ${state.feedbackRating >= n ? 'var(--primary)' : 'var(--gray-300)'}; background: ${state.feedbackRating >= n ? 'var(--primary-light)' : 'white'}; cursor: pointer; font-size: 1.1rem; color: ${state.feedbackRating >= n ? 'var(--primary)' : 'var(--gray-400)'}; font-weight: 600;">${n}</button>
+                                    `).join('')}
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--gray-500); margin-top: 0.25rem; padding: 0 0.25rem;">
+                                    <span>Not useful</span><span>Very useful</span>
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 1rem;">
+                                <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem;">What could we improve?</label>
+                                <textarea id="feedback-text" rows="3" placeholder="Tell us what you think..." style="width: 100%; padding: 0.75rem; border: 1px solid var(--gray-300); border-radius: 0.375rem; font-family: inherit; font-size: 0.9rem; resize: vertical; box-sizing: border-box;" oninput="app.updateFeedbackText(this.value)">${state.feedbackText}</textarea>
+                            </div>
+                            <button class="btn btn-primary" onclick="app.submitFeedback()" ${state.feedbackRating === 0 ? 'disabled' : ''} style="width: 100%;">Submit Feedback</button>
+                        `}
+                    ` : ''}
+                </div>
+
+                <!-- Security & Privacy -->
+                <div class="card">
+                    <h2 class="card-title" onclick="app.toggleSettingsSection('security')" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                        🔐 Security & Privacy
+                        <span style="font-size: 0.8rem; color: var(--gray-500);">${s.security === false ? '▶' : '▼'}</span>
+                    </h2>
+                    ${s.security !== false ? `
+                        <div class="settings-section">
+                            <div class="settings-title">PIN Protection</div>
+                            <p style="margin-bottom: 1rem; color: var(--gray-600);">Protect your data with a 4-digit PIN lock.</p>
+                            ${state.userPin ? `
+                                <button class="btn btn-secondary" onclick="app.changePIN()">Change PIN</button>
+                                <button class="btn btn-danger btn-small" onclick="app.removePIN()" style="margin-left: 0.5rem;">Remove PIN</button>
+                            ` : `
+                                <button class="btn btn-secondary" onclick="app.openPINSetupModal()">Set PIN</button>
+                            `}
+                        </div>
+                        <div class="settings-section">
+                            <div class="settings-title">Data Encryption</div>
+                            <div style="background: ${state.userPin ? 'var(--success)' : 'var(--warning)'}20; padding: 0.75rem; border-radius: 0.375rem; margin-bottom: 1rem;">
+                                <strong style="color: ${state.userPin ? 'var(--success)' : 'var(--warning)'};">Status: ${state.userPin ? '🔒 Encrypted' : '🔓 Unencrypted'}</strong>
+                            </div>
+                            ${state.userPin ? `<p style="font-size: 0.9rem; color: var(--gray-600);">Your data is encrypted with your PIN.</p>` : `<p style="font-size: 0.9rem; color: var(--gray-600);">Set a PIN above to enable encryption.</p>`}
+                        </div>
+                    ` : ''}
+                </div>
+
+                <!-- Data Management -->
+                <div class="card">
+                    <h2 class="card-title" onclick="app.toggleSettingsSection('data')" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                        📊 Data Management
+                        <span style="font-size: 0.8rem; color: var(--gray-500);">${s.data === false ? '▶' : '▼'}</span>
+                    </h2>
+                    ${s.data !== false ? `
+                        <div class="settings-section">
+                            <div class="settings-title">CGM Data Import</div>
+                            <p style="color: var(--gray-600); margin-bottom: 0.5rem;">Import continuous glucose monitor data from CSV file.</p>
+                            <div style="background: var(--gray-50); padding: 0.75rem; border-radius: 0.375rem; font-size: 0.85rem; color: var(--gray-700); margin-bottom: 1rem;">
+                                <strong>Dexcom:</strong> Timestamp, Glucose Value &nbsp;|&nbsp; <strong>Libre:</strong> Device Timestamp, Historic Glucose &nbsp;|&nbsp; <strong>Generic:</strong> time/date + glucose/bg columns
+                            </div>
+                            <input type="file" id="cgm-file-input" accept=".csv" onchange="app.handleCGMFileUpload(event)" style="display: none;" />
+                            <button class="btn btn-secondary" onclick="document.getElementById('cgm-file-input').click()">Upload CSV File</button>
+                            ${state.cgmImportSummary ? `
+                                <div class="cgm-summary" style="margin-top: 1rem;">
+                                    <div class="cgm-stat"><span class="cgm-stat-label">Readings:</span><span class="cgm-stat-value">${state.cgmImportSummary.count}</span></div>
+                                    <div class="cgm-stat"><span class="cgm-stat-label">Date Range:</span><span class="cgm-stat-value">${state.cgmImportSummary.dateRange}</span></div>
+                                    <div class="cgm-stat"><span class="cgm-stat-label">Average:</span><span class="cgm-stat-value">${state.cgmImportSummary.average} mg/dL</span></div>
+                                    <div class="cgm-stat"><span class="cgm-stat-label">Range:</span><span class="cgm-stat-value">${state.cgmImportSummary.min}-${state.cgmImportSummary.max} mg/dL</span></div>
+                                    <div class="cgm-stat"><span class="cgm-stat-label">In Range (70-180):</span><span class="cgm-stat-value" style="color: var(--success);">${state.cgmImportSummary.inRangePercent}%</span></div>
+                                    <div class="cgm-stat"><span class="cgm-stat-label">Below Range:</span><span class="cgm-stat-value" style="color: var(--warning);">${state.cgmImportSummary.belowPercent}%</span></div>
+                                    <div class="cgm-stat"><span class="cgm-stat-label">Above Range:</span><span class="cgm-stat-value" style="color: var(--danger);">${state.cgmImportSummary.abovePercent}%</span></div>
+                                </div>
+                                <div style="margin: 1rem 0;"><label class="form-label">Daily Summary:</label><div class="cgm-daily-summary">${state.cgmImportSummary.dailySummary}</div></div>
+                                <button class="btn btn-danger btn-small" onclick="app.clearCGMData()">Clear Imported Data</button>
+                            ` : `<p style="color: var(--gray-600); font-style: italic; margin-top: 0.5rem;">No data imported yet.</p>`}
+                        </div>
+                        <div class="settings-section">
+                            <div class="settings-title">Adverse Event Reports</div>
+                            ${state.adverseEvents.length > 0 ? `
+                                <p style="color: var(--gray-600); margin-bottom: 1rem;">You have ${state.adverseEvents.length} report(s).</p>
+                                <button class="btn btn-secondary" onclick="app.downloadAdverseEvents()">Download Reports</button>
+                                <button class="btn btn-danger btn-small" onclick="app.clearAdverseEvents()" style="margin-left: 0.5rem;">Clear</button>
+                            ` : `<p style="color: var(--gray-600);">No reports yet.</p>`}
+                        </div>
+                        <div class="settings-section">
+                            <div class="settings-title">Export My Data</div>
+                            <p style="margin-bottom: 1rem; color: var(--gray-600);">Download your data to share with your healthcare provider.</p>
+                            <button class="btn btn-secondary" onclick="app.exportDataCSV()" style="margin-right: 0.5rem;">Export as CSV</button>
+                            <button class="btn btn-secondary" onclick="app.exportDataJSON()">Export as JSON</button>
+                        </div>
+                        <div class="settings-section">
+                            <div class="settings-title">Audit Log</div>
+                            <button class="btn btn-secondary" onclick="app.toggleAuditLog()" style="margin-right: 0.5rem;">View Audit Log</button>
+                            <button class="btn btn-secondary" onclick="app.exportAuditLog()">Export Audit Log</button>
+                            ${state.showAuditLog ? `
+                                <div style="margin-top: 1rem; background: var(--gray-50); border-radius: 0.375rem; padding: 1rem; max-height: 300px; overflow-y: auto;">
+                                    ${(() => {
+                                        const auditLog = JSON.parse(localStorage.getItem('tdb_audit_log') || '[]');
+                                        if (auditLog.length === 0) return '<p style="color: var(--gray-600); font-style: italic;">No entries yet.</p>';
+                                        return '<div style="font-size: 0.85rem;">' + auditLog.slice(-50).reverse().map(entry => {
+                                            const time = new Date(entry.timestamp).toLocaleString();
+                                            return `<div style="margin-bottom: 0.75rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--gray-200);">
+                                                <strong>${entry.action}</strong> <span style="color: var(--gray-600); font-size: 0.8rem;">${time}</span>
+                                                ${entry.profile ? `<span style="color: var(--blue-600); margin-left: 0.5rem;">[${entry.profile}]</span>` : ''}
+                                                ${Object.keys(entry.details).length > 0 ? `<div style="margin-top: 0.25rem; color: var(--gray-600);">${JSON.stringify(entry.details)}</div>` : ''}
+                                            </div>`;
+                                        }).join('') + '</div>';
+                                    })()}
+                                </div>
+                            ` : ''}
+                        </div>
+                    ` : ''}
+                </div>
+
+                <!-- About & Legal -->
+                <div class="card">
+                    <h2 class="card-title">About & Legal</h2>
+                    <p style="margin-bottom: 1rem; color: var(--gray-600);">Education, not extremes. 📱 <strong>@thediabetesbrief</strong></p>
+                    <button class="btn btn-secondary" onclick="app.openPrivacyModal()" style="width: 100%; margin-bottom: 0.5rem;">Privacy Policy & Terms</button>
                     <button class="btn btn-danger" onclick="app.clearAllData()" style="width: 100%;">Clear All Data</button>
                 </div>
             `;
@@ -3591,7 +3588,7 @@
                             <div class="modal-title">Privacy Policy & Terms of Use</div>
                             <div class="modal-content" style="max-height: 500px; overflow-y: auto; font-size: 0.9rem; line-height: 1.7;">
 
-                                <p style="background: var(--danger); color: white; padding: 0.75rem 1rem; border-radius: 0.375rem; font-weight: 700; text-align: center; margin-bottom: 1.5rem;">🚨 NOT FOR EMERGENCY USE. If you are experiencing a medical emergency, call 911 or go to your nearest emergency room immediately.</p>
+                                <p style="background: #b91c1c; color: white; padding: 0.75rem 1rem; border-radius: 0.375rem; font-weight: 700; text-align: center; margin-bottom: 1.5rem;">🚨 NOT FOR EMERGENCY USE. If you are experiencing a medical emergency, call 911 or go to your nearest emergency room immediately.</p>
 
                                 <p style="font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem;">Privacy Policy</p>
 
@@ -3801,7 +3798,7 @@
                         <div class="modal">
                             <div class="modal-title">Welcome to The Diabetes Brief</div>
                             <div class="modal-content" style="max-height: 350px; overflow-y: auto;">
-                                <p style="background: var(--danger); color: white; padding: 0.75rem 1rem; border-radius: 0.375rem; font-weight: 700; text-align: center; margin-bottom: 1rem;">🚨 NOT FOR EMERGENCY USE. Call 911 for medical emergencies.</p>
+                                <p style="background: #b91c1c; color: white; padding: 0.75rem 1rem; border-radius: 0.375rem; font-weight: 700; text-align: center; margin-bottom: 1rem;">🚨 NOT FOR EMERGENCY USE. Call 911 for medical emergencies.</p>
                                 <p><strong>Important Medical Disclaimer:</strong></p>
                                 <p>The Diabetes Brief is an educational tool for learning about diabetes management and lifestyle modification. It is NOT a substitute for professional medical advice, diagnosis, or treatment.</p>
                                 <p><strong>Key Points:</strong></p>
@@ -4752,6 +4749,12 @@
             },
 
             // DC-033: Audit Log Management
+            toggleSettingsSection(section) {
+                if (!state.settingsExpanded) state.settingsExpanded = {};
+                state.settingsExpanded[section] = state.settingsExpanded[section] === false ? true : false;
+                render();
+            },
+
             toggleAuditLog() {
                 state.showAuditLog = !state.showAuditLog;
                 render();
