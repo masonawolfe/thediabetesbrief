@@ -1,1 +1,2 @@
-/*    /index.html   200
+# Only redirect paths that don't match a file to index.html
+# Static files (images, txt, json, etc.) are served directly by Netlify
