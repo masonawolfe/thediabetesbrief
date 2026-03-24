@@ -1176,6 +1176,10 @@
             border-color: var(--primary);
         }
 
+        .quick-sheet-expanded {
+            grid-column: 1 / -1;
+        }
+
         .quick-sheet-header {
             display: flex;
             align-items: center;
@@ -1212,8 +1216,20 @@
         }
 
         @media print {
-            .quick-sheet-card {
+            body[data-printing="quick-sheet"] * {
+                display: none !important;
+            }
+            body[data-printing="quick-sheet"] #root,
+            body[data-printing="quick-sheet"] #root .app-container,
+            body[data-printing="quick-sheet"] #root .app-content,
+            body[data-printing="quick-sheet"] #root .tab-content,
+            body[data-printing="quick-sheet"] .quick-sheets-grid,
+            body[data-printing="quick-sheet"] .quick-sheet-card[data-print-target="true"],
+            body[data-printing="quick-sheet"] .quick-sheet-card[data-print-target="true"] *,
+            body[data-printing="quick-sheet"] .quick-sheet-card[data-print-target="true"] .quick-sheet-content {
                 display: block !important;
+            }
+            .quick-sheet-card {
                 box-shadow: none !important;
                 border: 1px solid #ccc !important;
                 page-break-inside: avoid;
@@ -1225,13 +1241,9 @@
                 padding: 0.75rem 1rem !important;
             }
             .quick-sheet-content {
-                display: block !important;
                 max-height: none !important;
                 padding: 1rem !important;
                 border: none !important;
-            }
-            .quick-sheets-grid {
-                display: block !important;
             }
         }
 
@@ -2417,6 +2429,7 @@
                 expandedId: null,
             },
             basalDrugInteractionsExpanded: false,
+            basalSelectedInsulin: '',
             basalCostCoverageExpanded: false,
             showFoodInsecurityModal: false,
             foodInsecurityResponses: {
@@ -2775,7 +2788,7 @@
             filteredSheets.forEach(sheet => {
                 const isExpanded = expandedId === sheet.id;
                 html += `
-                    <div class="quick-sheet-card" role="region" aria-label="${sheet.title}">
+                    <div class="quick-sheet-card${isExpanded ? ' quick-sheet-expanded' : ''}" data-sheet-id="${sheet.id}" role="region" aria-label="${sheet.title}">
                         <div class="quick-sheet-header" onclick="app.toggleQuickSheet('${sheet.id}')" role="button" tabindex="0" aria-expanded="${isExpanded}">
                             <div style="display: flex; align-items: center; gap: 0.75rem; flex: 1;">
                                 <span style="font-size: 1.75rem;">${sheet.icon}</span>
@@ -2960,9 +2973,9 @@
                     <form onsubmit="event.preventDefault(); app.calculateBasalRecommendation()">
                         <div class="form-group">
                             <label class="form-label">Insulin Type *</label>
-                            <select id="basal-insulin-type" aria-label="Select basal insulin type" required onchange="app.updateBasalInsulinSelection()">
+                            <select id="basal-insulin-type" aria-label="Select basal insulin type" required onchange="app.updateBasalInsulinSelection(this.value)">
                                 <option value="">Select...</option>
-                                ${BASAL_INSULINS.map(insulin => `<option value="${insulin.id}">${insulin.name}</option>`).join('')}
+                                ${BASAL_INSULINS.map(insulin => `<option value="${insulin.id}" ${state.basalSelectedInsulin === insulin.id ? 'selected' : ''}>${insulin.name}</option>`).join('')}
                             </select>
                         </div>
 
@@ -2998,7 +3011,7 @@
                             ${state.basalCostCoverageExpanded ? `
                                 <div style="margin-top: 1rem; padding: 1rem; background: var(--blue-50); border-radius: 0.375rem;">
                                     ${(() => {
-                                        const selected = document.getElementById('basal-insulin-type')?.value;
+                                        const selected = state.basalSelectedInsulin;
                                         const costData = selected && INSULIN_COST_DATA[selected];
                                         if (!costData) {
                                             return '<p style="color: var(--gray-600);">Select an insulin type to view cost and coverage information.</p>';
@@ -4046,7 +4059,24 @@
                 html += renderProviderSummary();
             }
 
+            // Preserve search input focus across renders
+            const focused = document.activeElement;
+            const wasFocused = focused && (focused.tagName === 'INPUT' || focused.tagName === 'TEXTAREA');
+            const focusSelector = wasFocused ? focused.getAttribute('aria-label') || focused.getAttribute('placeholder') : null;
+            const cursorPos = wasFocused ? focused.selectionStart : null;
+
             root.innerHTML = html;
+
+            // Restore focus to matching input
+            if (focusSelector) {
+                const el = root.querySelector(`[aria-label="${focusSelector}"], [placeholder="${focusSelector}"]`);
+                if (el) {
+                    el.focus();
+                    if (cursorPos !== null && el.setSelectionRange) {
+                        el.setSelectionRange(cursorPos, cursorPos);
+                    }
+                }
+            }
         }
 
         function renderPINLockScreen() {
@@ -4105,6 +4135,7 @@
             },
 
             toggleTopic(topicId) {
+                topicId = isNaN(topicId) ? topicId : Number(topicId);
                 if (state.educationState.expandedId === topicId) {
                     state.educationState.expandedId = null;
                 } else {
@@ -4143,10 +4174,15 @@
                 // Expand the sheet so it prints
                 state.quickSheetState.expandedId = sheetId;
                 render();
-                // Delay print to allow render
                 setTimeout(() => {
+                    // Mark body and target card for print CSS
+                    document.body.setAttribute('data-printing', 'quick-sheet');
+                    const targetCard = document.querySelector(`.quick-sheet-card[data-sheet-id="${sheetId}"]`);
+                    if (targetCard) targetCard.setAttribute('data-print-target', 'true');
                     window.print();
-                    // Keep it expanded for user but they can close
+                    // Clean up after print
+                    document.body.removeAttribute('data-printing');
+                    document.querySelectorAll('[data-print-target]').forEach(el => el.removeAttribute('data-print-target'));
                 }, 100);
             },
 
@@ -4302,7 +4338,8 @@
                 render();
             },
 
-            updateBasalInsulinSelection() {
+            updateBasalInsulinSelection(value) {
+                state.basalSelectedInsulin = value || '';
                 render();
             },
 
