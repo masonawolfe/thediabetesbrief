@@ -68,21 +68,21 @@
         .app-header {
             background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
             color: var(--white);
-            padding: 1rem;
+            padding: 0.5rem 1rem;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
+            gap: 0.75rem;
         }
 
         .app-title {
-            font-size: 1.5rem;
+            font-size: 1.15rem;
             font-weight: bold;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            white-space: nowrap;
         }
 
         .app-header-actions {
@@ -95,12 +95,12 @@
             background: rgba(255, 255, 255, 0.2);
             color: var(--white);
             border: none;
-            padding: 0.5rem 1rem;
+            padding: 0.375rem 0.625rem;
             border-radius: 0.375rem;
             cursor: pointer;
             font-size: 0.875rem;
-            min-width: 48px;
-            min-height: 48px;
+            min-width: 40px;
+            min-height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1455,7 +1455,31 @@
             'blood glucose': 'The amount of sugar (glucose) in the bloodstream; measured in mg/dL.',
             'carbohydrate': 'A nutrient found in foods like bread, rice, fruit, and vegetables that affects blood sugar.',
             'insulin sensitivity': 'How well your body responds to insulin; greater sensitivity means you need less insulin.',
-            'dawn phenomenon': 'Early morning rise in blood sugar due to hormones released by your body before waking.',
+            'dawn phenomenon': 'Early morning rise in blood sugar (typically 2-8 AM) caused by hormones like cortisol and growth hormone that signal the liver to release glucose. Common in both Type 1 and Type 2 diabetes. Managing it may involve adjusting basal insulin timing or dose — discuss with your provider.',
+            'insulin resistance': 'A condition where your cells do not respond effectively to insulin, requiring the pancreas to produce more. Contributing factors include excess weight (especially abdominal), physical inactivity, genetics, and chronic inflammation. Central to Type 2 diabetes development.',
+            'metabolic syndrome': 'A cluster of conditions that increase heart disease and diabetes risk: waist circumference >40 in (men) or >35 in (women), triglycerides >150 mg/dL, HDL <40 (men) or <50 (women), blood pressure >130/85, and fasting glucose >100 mg/dL. Diagnosed when 3 or more are present.',
+            'diabetic ketoacidosis': 'A serious, life-threatening complication where the body produces high levels of ketones due to insufficient insulin. Symptoms include nausea, vomiting, abdominal pain, fruity-smelling breath, and confusion. Requires immediate emergency treatment. More common in Type 1 but can occur in Type 2.',
+            'diabetic neuropathy': 'Nerve damage caused by prolonged high blood sugar. Peripheral neuropathy (most common) affects feet and hands with tingling, numbness, or pain. Autonomic neuropathy can affect digestion, heart rate, and blood pressure. Early detection through annual foot exams is critical.',
+            'nephropathy': 'Kidney damage caused by diabetes. High blood sugar and high blood pressure damage the tiny blood vessels in the kidneys over time. Monitored with annual urine albumin and eGFR tests. Early stages are reversible with good blood sugar and blood pressure control.',
+            'retinopathy': 'Eye damage caused by diabetes affecting the blood vessels in the retina. Can lead to vision loss if untreated. All people with diabetes should have a dilated eye exam at least once a year. Early stages often have no symptoms.',
+            'gastroparesis': 'Delayed stomach emptying caused by nerve damage from diabetes. Symptoms include nausea, vomiting, bloating, and unpredictable blood sugar after meals. Makes blood sugar management challenging because food absorption is unpredictable.',
+            'time in range': 'The percentage of time blood sugar stays within the target range (typically 70-180 mg/dL). Goal for most adults: >70% time in range. Measured by continuous glucose monitors (CGMs). Increasingly used alongside A1C as a key diabetes management metric.',
+            'continuous glucose monitor': 'A wearable device (CGM) that measures blood sugar every 1-5 minutes through a tiny sensor under the skin. Provides real-time readings, trend arrows, and alerts. Common brands: Dexcom, Libre (Abbott), Medtronic Guardian. Does not replace fingerstick checks entirely.',
+            'glycemic index': 'A scale (0-100) that ranks foods by how quickly they raise blood sugar. Low GI (<55): most fruits, legumes, whole grains. Medium GI (56-69): brown rice, sweet potato. High GI (>70): white bread, white rice, potatoes. Lower GI foods produce more gradual blood sugar rises.',
+            'glycemic load': 'A measure that accounts for both the glycemic index AND the portion size of a food. More practical than GI alone. Calculated as: GI x grams of carbs per serving / 100. Low GL (<10), Medium (11-19), High (>20).',
+            'polydipsia': 'Excessive thirst — a common symptom of uncontrolled diabetes. Caused by the body trying to dilute high blood sugar levels. Often accompanied by polyuria (frequent urination).',
+            'polyuria': 'Frequent urination — a common symptom of uncontrolled diabetes. The kidneys produce more urine to flush excess glucose from the blood. Often causes dehydration and increased thirst.',
+            'polyphagia': 'Excessive hunger — a symptom of uncontrolled diabetes. Despite high blood sugar, cells cannot access glucose for energy without sufficient insulin, triggering hunger signals.',
+            'glucagon': 'A hormone produced by the pancreas that raises blood sugar by signaling the liver to release stored glucose. Used as an emergency treatment for severe hypoglycemia. Available as injection or nasal spray (Baqsimi).',
+            'C-peptide': 'A protein released by the pancreas alongside insulin. Measuring C-peptide levels helps determine how much insulin your body is producing. Used to distinguish between Type 1 (very low/absent) and Type 2 (normal or high) diabetes.',
+            'islets of Langerhans': 'Clusters of cells in the pancreas that produce hormones including insulin (beta cells) and glucagon (alpha cells). In Type 1 diabetes, the immune system destroys the beta cells. In Type 2, beta cells become dysfunctional over time.',
+            'insulin pump': 'A small electronic device that delivers rapid-acting insulin continuously through a tiny tube (catheter) under the skin. Replaces multiple daily injections. Can be programmed with different basal rates and bolus doses. Common brands: Medtronic, Tandem, Omnipod.',
+            'pen needle': 'A short, thin needle that attaches to an insulin pen for injection. Available in various lengths (4mm-12.7mm) and gauges (29-32G). Shorter, thinner needles are generally more comfortable. Should be used once and discarded.',
+            'lancet': 'A small, sharp needle used with a lancing device to prick the finger for blood glucose testing. Available in different gauges. Should be changed regularly for comfort and hygiene.',
+            'ketones': 'Acids produced when the body breaks down fat for energy instead of glucose. Small amounts are normal during fasting, but high levels indicate the body is not getting enough insulin. Check ketones when blood sugar is above 240 mg/dL or during illness.',
+            'microalbuminuria': 'Small amounts of albumin (protein) in the urine — an early sign of kidney damage from diabetes. Detected by a urine albumin-to-creatinine ratio (UACR) test. Target: <30 mg/g. Screening recommended annually for all diabetes patients.',
+            'eGFR': 'Estimated glomerular filtration rate — a measure of kidney function calculated from blood creatinine, age, and sex. Normal: >90 mL/min. Mildly decreased: 60-89. Moderately decreased: 30-59. Severely decreased: <30. Monitored annually in diabetes.',
+            'lipodystrophy': 'Changes in fat tissue at insulin injection sites. Lipohypertrophy (lumps) is most common, caused by injecting in the same spot repeatedly. Lipoatrophy (indentations) is less common. Both can affect insulin absorption. Rotate injection sites to prevent.',
         };
 
         const EDUCATION_TOPICS = [
@@ -1524,49 +1548,57 @@
                 drugs: 'Glipizide, glyburide, glimepiride',
                 effect: 'Increased hypoglycemia risk',
                 level: 'warning',
+                category: 'Diabetes Medications',
                 details: 'When combined with insulin, these medications significantly increase the risk of low blood sugar. Close monitoring and possible insulin dose reduction may be needed.'
             },
             'metformin': {
                 drugs: 'Metformin',
                 effect: 'Generally safe, may enhance insulin effect',
                 level: 'info',
+                category: 'Diabetes Medications',
                 details: 'Metformin is usually safe with insulin and may improve insulin sensitivity. No major interaction, but monitoring is still recommended.'
             },
             'glp1-agonists': {
                 drugs: 'Ozempic (semaglutide), Trulicity (dulaglutide), Mounjaro (tirzepatide)',
                 effect: 'May need insulin dose reduction',
                 level: 'warning',
+                category: 'Diabetes Medications',
                 details: 'GLP-1 agonists lower blood sugar independently. When combined with insulin, your insulin dose may need to be reduced to prevent hypoglycemia.'
             },
             'sglt2-inhibitors': {
                 drugs: 'Jardiance (empagliflozin), Farxiga (dapagliflozin), Invokana (canagliflozin)',
                 effect: 'May lower blood sugar independently',
                 level: 'info',
+                category: 'Diabetes Medications',
                 details: 'SGLT2 inhibitors work differently from insulin and may lower blood sugar on their own. Monitor readings closely and discuss dosing with your provider.'
             },
             'beta-blockers': {
                 drugs: 'Metoprolol, atenolol, bisoprolol',
                 effect: 'Can mask hypoglycemia symptoms',
                 level: 'warning',
+                category: 'Blood Pressure Medications',
                 details: 'Beta-blockers may reduce your ability to feel low blood sugar symptoms (shakiness, racing heart). Extra vigilance with blood sugar monitoring is important.'
-            },
-            'steroids': {
-                drugs: 'Prednisone, dexamethasone, methylprednisolone',
-                effect: 'Can significantly raise blood sugar',
-                level: 'warning',
-                details: 'Steroids can substantially increase blood sugar. You may need temporary insulin dose increases while taking steroids. Monitor frequently.'
-            },
-            'thiazide-diuretics': {
-                drugs: 'Hydrochlorothiazide, chlorthalidone',
-                effect: 'May raise blood sugar',
-                level: 'info',
-                details: 'Thiazide diuretics can increase blood sugar levels, particularly at higher doses. Monitor your readings and discuss with your provider.'
             },
             'ace-inhibitors': {
                 drugs: 'Lisinopril, enalapril, ramipril',
                 effect: 'May enhance insulin sensitivity',
                 level: 'info',
+                category: 'Blood Pressure Medications',
                 details: 'ACE inhibitors may improve your bodys response to insulin and lower blood sugar. This is generally beneficial for blood sugar control.'
+            },
+            'thiazide-diuretics': {
+                drugs: 'Hydrochlorothiazide, chlorthalidone',
+                effect: 'May raise blood sugar',
+                level: 'info',
+                category: 'Blood Pressure Medications',
+                details: 'Thiazide diuretics can increase blood sugar levels, particularly at higher doses. Monitor your readings and discuss with your provider.'
+            },
+            'steroids': {
+                drugs: 'Prednisone, dexamethasone, methylprednisolone',
+                effect: 'Can significantly raise blood sugar',
+                level: 'warning',
+                category: 'Other Medications',
+                details: 'Steroids can substantially increase blood sugar. You may need temporary insulin dose increases while taking steroids. Monitor frequently.'
             }
         };
 
@@ -1685,7 +1717,7 @@
         ];
 
         const CLINICAL_INFO_DATA = {
-            title: 'Clinical Validation Documentation',
+            title: 'Evidence Base & References',
             sections: [
                 {
                     title: 'Blood Glucose Thresholds & Clinical Guidelines',
@@ -1694,7 +1726,7 @@
 
                         <h4 style="margin-top: 1rem; margin-bottom: 0.5rem; font-weight: 600;">Adult Targets (Type 2 Diabetes)</h4>
                         <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
-                            <li><strong>Fasting Blood Glucose:</strong> 80-130 mg/dL (ADA Standards of Care 2025)</li>
+                            <li><strong>Fasting Blood Glucose:</strong> 80-120 mg/dL (ADA Standards of Care 2026)</li>
                             <li><strong>Basal Insulin High Threshold:</strong> >120 mg/dL</li>
                             <li><strong>Basal Insulin Low Threshold:</strong> <90 mg/dL</li>
                         </ul>
@@ -1707,7 +1739,7 @@
                     content: `
                         <h4 style="margin-bottom: 0.75rem; font-weight: 600;">Key Guidelines & Studies</h4>
                         <ul style="margin-left: 1.5rem;">
-                            <li><strong>American Diabetes Association (ADA).</strong> Standards of Care in Diabetes 2025. Published in Diabetes Care, January 2025. Target fasting glucose 80-130 mg/dL for most adults.</li>
+                            <li><strong>American Diabetes Association (ADA).</strong> Standards of Care in Diabetes 2026. Published in Diabetes Care, January 2026. Target fasting glucose 80-120 mg/dL for most adults.</li>
                             <li><strong>American Association of Clinical Endocrinologists (AACE).</strong> Comprehensive Type 2 Diabetes Management Algorithm. Fasting glucose target <110 mg/dL for most patients.</li>
                         </ul>
 
@@ -1721,6 +1753,40 @@
         };
 
         // DC-038: Anonymized Population Data Module
+        const KEY_LABS_TARGETS = [
+            { category: 'Glucose Control', labs: [
+                { name: 'A1C', target: '<7%', frequency: 'Every 3 months', notes: 'Individualized targets may vary (6.5-8%)' },
+                { name: 'Fasting Glucose', target: '80-120 mg/dL', frequency: 'Daily', notes: 'Before breakfast' },
+            ]},
+            { category: 'Cardiovascular', labs: [
+                { name: 'Blood Pressure', target: '<130/80 mmHg', frequency: 'Every visit', notes: 'ACE/ARB preferred if proteinuria' },
+                { name: 'LDL Cholesterol', target: '<100 mg/dL (<70 if high risk)', frequency: 'Annual fasting lipid panel', notes: 'Statin therapy for most adults with T2DM' },
+                { name: 'HDL Cholesterol', target: '>40 men / >50 women', frequency: 'Annual', notes: '' },
+                { name: 'Triglycerides', target: '<150 mg/dL', frequency: 'Annual', notes: 'Elevated levels increase cardiovascular risk' },
+            ]},
+            { category: 'Kidney Function', labs: [
+                { name: 'eGFR', target: 'Monitor annually (normal >90)', frequency: 'Annual (part of CMP)', notes: 'Tracks kidney filtration capacity' },
+                { name: 'Urine Albumin (UACR)', target: '<30 mg/g', frequency: 'Annual screening', notes: 'Early marker of kidney damage' },
+            ]},
+            { category: 'Other Monitoring', labs: [
+                { name: 'TSH', target: 'Normal range (0.4-4.0 mIU/L)', frequency: 'If on thyroid meds or symptoms', notes: 'Thyroid disease more common with diabetes' },
+                { name: 'Vitamin B12', target: 'Normal range (200-900 pg/mL)', frequency: 'Periodic if on metformin', notes: 'Metformin can deplete B12 over time' },
+                { name: 'CBC', target: 'Baseline', frequency: 'As clinically indicated', notes: 'Complete blood count' },
+                { name: 'CMP', target: 'Annual', frequency: 'Annual', notes: 'Comprehensive metabolic panel (electrolytes, liver, kidney)' },
+            ]},
+        ];
+
+        const INSURANCE_RESOURCES = [
+            { title: 'Medicare Part D $35 Cap', description: 'The Inflation Reduction Act caps insulin copays at $35/month for Medicare Part D beneficiaries. This applies to all covered insulin products with no deductible. Ask your pharmacist if your plan qualifies.' },
+            { title: 'Marketplace Plans (ACA)', description: 'Health Insurance Marketplace plans must cover diabetes supplies and preventive care. Many plans now cap insulin costs. Visit healthcare.gov during open enrollment or after a qualifying life event.' },
+            { title: 'Medicaid Coverage', description: 'Medicaid covers insulin and diabetes supplies in all states. Coverage details vary by state. If you are uninsured and have low income, you may qualify. Contact your state Medicaid office.' },
+            { title: 'Lilly Insulin Value Program', description: 'Eli Lilly offers insulin for $35/month per prescription (up to 2 pens or vials) regardless of insurance. No income requirements. Covers Humalog, Basaglar, and other Lilly insulins.' },
+            { title: 'NovoCare Patient Assistance', description: 'Novo Nordisk offers free or reduced-cost insulin for qualifying patients. Covers Levemir, Tresiba, Novolog, and other products. Income-based eligibility. Apply at novocare.com.' },
+            { title: 'Sanofi Patient Connection', description: 'Sanofi offers patient assistance for Lantus, Toujeo, Apidra, and other products. Free insulin for qualifying uninsured or underinsured patients. Apply at sanofipatientconnection.com.' },
+            { title: 'GoodRx & Cost Plus Drugs', description: 'Discount programs that may reduce out-of-pocket costs at participating pharmacies. GoodRx provides free coupons. Mark Cuban Cost Plus Drugs sells at cost plus a small margin. No insurance needed.' },
+            { title: '340B Pharmacies', description: 'Federally qualified health centers (FQHCs) and certain hospitals purchase medications at deeply discounted prices through the 340B program. If you receive care at an FQHC, ask about their pharmacy for significant savings.' },
+        ];
+
         const POPULATION_DATA = {
             title: 'Population Insights',
             prevalence: {
@@ -1786,7 +1852,7 @@
             },
             sources: [
                 'CDC National Diabetes Statistics Report 2022',
-                'ADA Standards of Care in Diabetes 2025',
+                'ADA Standards of Care in Diabetes 2026',
                 'International Consensus Report on Time in Range 2019',
                 'AACE Comprehensive Type 2 Diabetes Management Algorithm'
             ]
@@ -2142,9 +2208,9 @@
                 'tab.quickSheets': 'Quick Sheets',
                 'tab.quiz': 'Quiz',
                 'tab.basal': 'Basal',
-                'tab.progress': 'AI CGM Analysis',
-                'tab.glossary': 'Glossary',
-                'tab.info': 'Info',
+                'tab.progress': 'Progress & Data',
+                'tab.glossary': 'Medical Glossary',
+                'tab.info': 'Resources',
                 'tab.settings': 'Settings',
                 'tab.instagram': 'Instagram',
                 // Header
@@ -2242,9 +2308,9 @@
                 'tab.quickSheets': 'Hojas Rápidas',
                 'tab.quiz': 'Cuestionario',
                 'tab.basal': 'Insulina Basal',
-                'tab.progress': 'Análisis CGM con IA',
-                'tab.glossary': 'Glosario',
-                'tab.info': 'Información',
+                'tab.progress': 'Progreso y Datos',
+                'tab.glossary': 'Glosario Médico',
+                'tab.info': 'Recursos',
                 'tab.settings': 'Configuración',
                 'tab.instagram': 'Instagram',
                 // Header
@@ -2430,6 +2496,7 @@
             },
             basalDrugInteractionsExpanded: false,
             basalSelectedInsulin: '',
+            basalAveragingWindow: 3,
             basalCostCoverageExpanded: false,
             showFoodInsecurityModal: false,
             foodInsecurityResponses: {
@@ -2651,23 +2718,18 @@
             const headerHTML = `
                 <div class="app-header">
                     <div class="app-title">
-                        🩸 The Diabetes Brief<br>
-                        <span style="font-size: 0.7rem; font-weight: 400;">Education, not extremes</span>
+                        🩸 The Diabetes Brief <span style="font-size: 0.7rem; font-weight: 400; opacity: 0.85;">Education, not extremes</span>
                     </div>
-                    <div class="app-header-actions" style="flex: 1; display: flex; justify-content: space-between; align-items: center;">
+                    <div class="app-header-actions" style="flex: 1; display: flex; justify-content: flex-end; align-items: center; gap: 0.25rem;">
                         <div class="profile-selector">
                             <select onchange="app.switchProfile(this.value)" aria-label="Select profile">
                                 ${state.profiles.map((p, i) => `<option value="${i}" ${i === state.currentProfileIndex ? 'selected' : ''}>${p.name}</option>`).join('')}
                             </select>
                             <button class="header-btn" onclick="app.openAddProfileModal()" aria-label="Add profile" style="font-size: 1rem;">+</button>
                         </div>
-                        <div>
-                            <button class="header-btn" onclick="app.toggleLanguage()" aria-label="${state.language === 'en' ? 'Switch to Spanish' : 'Cambiar a inglés'}" style="font-weight: bold;">${state.language.toUpperCase()}</button>
-                            <button class="header-btn" onclick="app.openProviderSummary()" aria-label="Provider Summary">📋</button>
-                            <button class="header-btn" onclick="app.openHelpModal()" aria-label="Help">?</button>
-                            <button class="header-btn" onclick="app.openPrivacyModal()" aria-label="Privacy Policy">🔒</button>
-                            <button class="header-btn" onclick="app.openSettings()" aria-label="Settings">⚙️</button>
-                        </div>
+                        <button class="header-btn" onclick="app.toggleLanguage()" aria-label="${state.language === 'en' ? 'Switch to Spanish' : 'Cambiar a inglés'}" style="font-weight: bold;">${state.language.toUpperCase()}</button>
+                        <button class="header-btn" onclick="app.openHelpModal()" aria-label="Help & Legal">?</button>
+                        <button class="header-btn" onclick="app.openSettings()" aria-label="Settings">⚙️</button>
                     </div>
                 </div>
                 <div class="disclaimer-banner">${t('app.disclaimer')} Not for emergencies — call 911.</div>
@@ -2990,13 +3052,18 @@
                                     <div class="alert alert-info" style="margin-bottom: 1rem;">
                                         <strong>Important:</strong> This is not a complete list. Always inform your provider of all medications you take.
                                     </div>
-                                    ${Object.entries(DRUG_INTERACTIONS).map(([key, info]) => `
-                                        <div style="margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--gray-200);">
-                                            <strong style="color: ${info.level === 'warning' ? 'var(--danger)' : 'var(--info-dark)'};">${info.drugs}</strong>
-                                            <div style="font-weight: 600; margin: 0.5rem 0; color: var(--gray-700);">${info.effect}</div>
-                                            <div style="font-size: 0.9rem; color: var(--gray-600);">${info.details}</div>
-                                        </div>
-                                    `).join('')}
+                                    ${['Diabetes Medications', 'Blood Pressure Medications', 'Other Medications'].map(cat => {
+                                        const entries = Object.entries(DRUG_INTERACTIONS).filter(([k, v]) => v.category === cat);
+                                        if (!entries.length) return '';
+                                        return `<h4 style="font-weight: 700; color: var(--primary-dark); margin: 1rem 0 0.5rem; font-size: 0.95rem;">${cat}</h4>` +
+                                            entries.map(([key, info]) => `
+                                                <div style="margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--gray-200);">
+                                                    <strong style="color: ${info.level === 'warning' ? 'var(--danger)' : 'var(--info-dark)'};">${info.drugs}</strong>
+                                                    <div style="font-weight: 600; margin: 0.5rem 0; color: var(--gray-700);">${info.effect}</div>
+                                                    <div style="font-size: 0.9rem; color: var(--gray-600);">${info.details}</div>
+                                                </div>
+                                            `).join('');
+                                    }).join('')}
                                     <p style="font-size: 0.85rem; color: var(--gray-600); margin-top: 1rem; font-style: italic;">Talk to your pharmacist or healthcare provider about any medications you're taking.</p>
                                 </div>
                             ` : ''}
@@ -3059,10 +3126,19 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label">Fasting Blood Sugar Readings (last 3 days) *</label>
-                            <input type="number" placeholder="Day 1 (mg/dL)" min="0" id="basal-reading-1" aria-label="Fasting reading day 1" required />
-                            <input type="number" placeholder="Day 2 (mg/dL)" min="0" id="basal-reading-2" style="margin-top: 0.5rem;" aria-label="Fasting reading day 2" required />
-                            <input type="number" placeholder="Day 3 (mg/dL)" min="0" id="basal-reading-3" style="margin-top: 0.5rem;" aria-label="Fasting reading day 3" required />
+                            <label class="form-label">Averaging Window</label>
+                            <select id="basal-averaging-window" aria-label="Averaging window" onchange="app.setBasalAveragingWindow(this.value)">
+                                <option value="3" ${state.basalAveragingWindow === 3 ? 'selected' : ''}>3-day average</option>
+                                <option value="5" ${state.basalAveragingWindow === 5 ? 'selected' : ''}>5-day average</option>
+                                <option value="7" ${state.basalAveragingWindow === 7 ? 'selected' : ''}>7-day average</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Fasting Blood Sugar Readings (last ${state.basalAveragingWindow} days) *</label>
+                            ${Array.from({length: state.basalAveragingWindow}, (_, i) => `
+                                <input type="number" placeholder="Day ${i + 1} (mg/dL)" min="0" id="basal-reading-${i + 1}" aria-label="Fasting reading day ${i + 1}" required ${i > 0 ? 'style="margin-top: 0.5rem;"' : ''} />
+                            `).join('')}
                         </div>
 
                         <button type="submit" class="btn btn-primary" style="width: 100%;">Calculate Recommendation</button>
@@ -3099,7 +3175,7 @@
 
             let html = `
                 <div class="card">
-                    <h2 class="card-title">Your Learning Progress</h2>
+                    <h2 class="card-title">Your Progress & Data</h2>
                     <p style="color: var(--gray-600); margin-bottom: 1rem;">Track your diabetes education journey and knowledge development.</p>
                 </div>
 
@@ -3149,8 +3225,46 @@
                         ${topicsRead < totalTopics ? `<li>Continue exploring education topics to strengthen your knowledge</li>` : `<li>You've read all available topics! Great progress!</li>`}
                         <li>Take the quiz regularly to test your understanding</li>
                         <li>Use the Basal Insulin tool to apply your learning</li>
-                        <li>Check out the Glossary to refresh key diabetes terms</li>
+                        <li>Check out the Medical Glossary to refresh key diabetes terms</li>
                     </ul>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title" style="font-size: 1.1rem;">📊 CGM Data Import</h3>
+                    <p style="color: var(--gray-600); margin-bottom: 0.5rem;">Import continuous glucose monitor data from CSV file.</p>
+                    <div style="background: var(--gray-50); padding: 0.75rem; border-radius: 0.375rem; font-size: 0.85rem; color: var(--gray-700); margin-bottom: 1rem;">
+                        <strong>Dexcom:</strong> Timestamp, Glucose Value &nbsp;|&nbsp; <strong>Libre:</strong> Device Timestamp, Historic Glucose &nbsp;|&nbsp; <strong>Generic:</strong> time/date + glucose/bg columns
+                    </div>
+                    <input type="file" id="cgm-file-input" accept=".csv" onchange="app.handleCGMFileUpload(event)" style="display: none;" />
+                    <button class="btn btn-secondary" onclick="document.getElementById('cgm-file-input').click()">Upload CSV File</button>
+                    ${state.cgmImportSummary ? `
+                        <div class="cgm-summary" style="margin-top: 1rem;">
+                            <div class="cgm-stat"><span class="cgm-stat-label">Readings:</span><span class="cgm-stat-value">${state.cgmImportSummary.count}</span></div>
+                            <div class="cgm-stat"><span class="cgm-stat-label">Date Range:</span><span class="cgm-stat-value">${state.cgmImportSummary.dateRange}</span></div>
+                            <div class="cgm-stat"><span class="cgm-stat-label">Average:</span><span class="cgm-stat-value">${state.cgmImportSummary.average} mg/dL</span></div>
+                            <div class="cgm-stat"><span class="cgm-stat-label">Range:</span><span class="cgm-stat-value">${state.cgmImportSummary.min}-${state.cgmImportSummary.max} mg/dL</span></div>
+                            <div class="cgm-stat"><span class="cgm-stat-label">In Range (70-180):</span><span class="cgm-stat-value" style="color: var(--success);">${state.cgmImportSummary.inRangePercent}%</span></div>
+                            <div class="cgm-stat"><span class="cgm-stat-label">Below Range:</span><span class="cgm-stat-value" style="color: var(--warning);">${state.cgmImportSummary.belowPercent}%</span></div>
+                            <div class="cgm-stat"><span class="cgm-stat-label">Above Range:</span><span class="cgm-stat-value" style="color: var(--danger);">${state.cgmImportSummary.abovePercent}%</span></div>
+                        </div>
+                        <div style="margin: 1rem 0;"><label class="form-label">Daily Summary:</label><div class="cgm-daily-summary">${state.cgmImportSummary.dailySummary}</div></div>
+                        <button class="btn btn-danger btn-small" onclick="app.clearCGMData()">Clear Imported Data</button>
+                    ` : `<p style="color: var(--gray-600); font-style: italic; margin-top: 0.5rem;">No data imported yet.</p>`}
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title" style="font-size: 1.1rem;">🧠 Wellness Tools</h3>
+                    <div style="margin-bottom: 1rem;">
+                        <div class="settings-title">Diabetes Distress Screening</div>
+                        <p style="margin-bottom: 0.75rem; color: var(--gray-600);">Monthly screening for diabetes distress (takes 2 minutes)</p>
+                        <button class="btn btn-secondary" onclick="app.openDDS4Modal()">Start Wellness Check</button>
+                    </div>
+                    <div>
+                        <div class="settings-title">Food Access & Affordability</div>
+                        <p style="margin-bottom: 0.75rem; color: var(--gray-600);">Check in on food security and access to diabetes-friendly foods.</p>
+                        <button class="btn btn-secondary" onclick="app.openFoodInsecurityScreening()">Food Security Check-in</button>
+                        <div style="font-size: 0.85rem; color: var(--gray-500); margin-top: 0.5rem;">Last checked: ${state.foodInsecurityLastChecked ? new Date(parseInt(state.foodInsecurityLastChecked)).toLocaleDateString() : 'Never'}</div>
+                    </div>
                 </div>
             `;
 
@@ -3193,7 +3307,7 @@
             let html = `
                 <div class="card">
                     <h2 class="card-title">${CLINICAL_INFO_DATA.title}</h2>
-                    <p style="color: var(--gray-600); margin-bottom: 1rem;">This section documents the clinical evidence base and guidelines used in The Diabetes Brief's glucose thresholds and recommendations.</p>
+                    <p style="color: var(--gray-600); margin-bottom: 1rem;">Where our information comes from: The Diabetes Brief uses evidence-based guidelines from these sources.</p>
                 </div>
             `;
 
@@ -3206,10 +3320,52 @@
                 `;
             });
 
+            // Key Labs & Targets
+            html += `<div class="card">
+                <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; color: var(--gray-900);">🔬 Key Labs & Targets for Type 2 Diabetes</h3>
+                <p style="color: var(--gray-600); margin-bottom: 1rem;">Recommended monitoring and target values. Individual goals should be set with your healthcare provider.</p>
+                ${KEY_LABS_TARGETS.map(cat => `
+                    <h4 style="font-weight: 700; color: var(--primary-dark); margin: 1rem 0 0.5rem; font-size: 0.95rem;">${cat.category}</h4>
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+                            <thead><tr style="background: var(--gray-100);">
+                                <th style="padding: 0.5rem; text-align: left; border-bottom: 2px solid var(--gray-300);">Lab / Measure</th>
+                                <th style="padding: 0.5rem; text-align: left; border-bottom: 2px solid var(--gray-300);">Target</th>
+                                <th style="padding: 0.5rem; text-align: left; border-bottom: 2px solid var(--gray-300);">Frequency</th>
+                                <th style="padding: 0.5rem; text-align: left; border-bottom: 2px solid var(--gray-300);">Notes</th>
+                            </tr></thead>
+                            <tbody>${cat.labs.map(lab => `
+                                <tr style="border-bottom: 1px solid var(--gray-200);">
+                                    <td style="padding: 0.5rem; font-weight: 600;">${lab.name}</td>
+                                    <td style="padding: 0.5rem; color: var(--primary-dark);">${lab.target}</td>
+                                    <td style="padding: 0.5rem;">${lab.frequency}</td>
+                                    <td style="padding: 0.5rem; color: var(--gray-500); font-size: 0.8rem;">${lab.notes}</td>
+                                </tr>
+                            `).join('')}</tbody>
+                        </table>
+                    </div>
+                `).join('')}
+            </div>`;
+
+            // Insurance & Cost Resources
+            html += `<div class="card">
+                <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; color: var(--gray-900);">💰 Insurance & Cost Navigation</h3>
+                <p style="color: var(--gray-600); margin-bottom: 1rem;">Programs and resources that may help reduce your out-of-pocket costs for insulin and diabetes supplies.</p>
+                ${INSURANCE_RESOURCES.map(r => `
+                    <div style="margin-bottom: 1rem; padding: 0.75rem; background: var(--gray-50); border-radius: 0.375rem; border-left: 3px solid var(--primary);">
+                        <strong style="color: var(--gray-900);">${r.title}</strong>
+                        <p style="margin: 0.25rem 0 0; font-size: 0.9rem; color: var(--gray-600);">${r.description}</p>
+                    </div>
+                `).join('')}
+                <div class="alert alert-info" style="margin-top: 1rem;">
+                    <strong>Note:</strong> Programs and eligibility change frequently. Contact each program directly for current information. Your pharmacist can also help identify cost-saving options.
+                </div>
+            </div>`;
+
             html += `
                 <div class="card">
                     <div class="alert alert-info">
-                        <strong>Disclaimer:</strong> This information is for educational purposes. Individual glucose targets should be determined with your healthcare provider based on your specific circumstances.
+                        <strong>Disclaimer:</strong> This information is for educational purposes. Individual targets should be determined with your healthcare provider based on your specific circumstances.
                     </div>
                 </div>
             `;
@@ -3560,21 +3716,11 @@
                     </h2>
                     ${s.progress !== false ? `
                         <div class="settings-section">
-                            <div style="background: var(--blue-50); padding: 1rem; border-radius: 0.375rem; margin-bottom: 1rem;">
+                            <div style="background: var(--blue-50); padding: 1rem; border-radius: 0.375rem;">
                                 <div style="margin-bottom: 0.5rem;">📚 Topics Read: <strong>${topicsRead}</strong></div>
                                 <div>✅ Quizzes Completed: <strong>${quizzesCompleted}</strong></div>
                             </div>
-                        </div>
-                        <div class="settings-section">
-                            <div class="settings-title">Wellness Check</div>
-                            <p style="margin-bottom: 1rem; color: var(--gray-600);">Monthly screening for diabetes distress (takes 2 minutes)</p>
-                            <button class="btn btn-secondary" onclick="app.openDDS4Modal()">Start Wellness Check</button>
-                        </div>
-                        <div class="settings-section">
-                            <div class="settings-title">Food Access & Affordability</div>
-                            <p style="margin-bottom: 0.5rem; color: var(--gray-600);">Check in on food security and access to diabetes-friendly foods.</p>
-                            <button class="btn btn-secondary" onclick="app.openFoodInsecurityScreening()" style="margin-bottom: 0.5rem;">Food Security Check-in</button>
-                            <div style="font-size: 0.85rem; color: var(--gray-600); margin-top: 0.5rem;">Last checked: ${state.foodInsecurityLastChecked ? new Date(parseInt(state.foodInsecurityLastChecked)).toLocaleDateString() : 'Never'}</div>
+                            <p style="font-size: 0.85rem; color: var(--gray-500); margin-top: 0.5rem;">Wellness tools and CGM data are in the Progress & Data tab.</p>
                         </div>
                     ` : ''}
                 </div>
@@ -3649,28 +3795,6 @@
                     </h2>
                     ${s.data !== false ? `
                         <div class="settings-section">
-                            <div class="settings-title">CGM Data Import</div>
-                            <p style="color: var(--gray-600); margin-bottom: 0.5rem;">Import continuous glucose monitor data from CSV file.</p>
-                            <div style="background: var(--gray-50); padding: 0.75rem; border-radius: 0.375rem; font-size: 0.85rem; color: var(--gray-700); margin-bottom: 1rem;">
-                                <strong>Dexcom:</strong> Timestamp, Glucose Value &nbsp;|&nbsp; <strong>Libre:</strong> Device Timestamp, Historic Glucose &nbsp;|&nbsp; <strong>Generic:</strong> time/date + glucose/bg columns
-                            </div>
-                            <input type="file" id="cgm-file-input" accept=".csv" onchange="app.handleCGMFileUpload(event)" style="display: none;" />
-                            <button class="btn btn-secondary" onclick="document.getElementById('cgm-file-input').click()">Upload CSV File</button>
-                            ${state.cgmImportSummary ? `
-                                <div class="cgm-summary" style="margin-top: 1rem;">
-                                    <div class="cgm-stat"><span class="cgm-stat-label">Readings:</span><span class="cgm-stat-value">${state.cgmImportSummary.count}</span></div>
-                                    <div class="cgm-stat"><span class="cgm-stat-label">Date Range:</span><span class="cgm-stat-value">${state.cgmImportSummary.dateRange}</span></div>
-                                    <div class="cgm-stat"><span class="cgm-stat-label">Average:</span><span class="cgm-stat-value">${state.cgmImportSummary.average} mg/dL</span></div>
-                                    <div class="cgm-stat"><span class="cgm-stat-label">Range:</span><span class="cgm-stat-value">${state.cgmImportSummary.min}-${state.cgmImportSummary.max} mg/dL</span></div>
-                                    <div class="cgm-stat"><span class="cgm-stat-label">In Range (70-180):</span><span class="cgm-stat-value" style="color: var(--success);">${state.cgmImportSummary.inRangePercent}%</span></div>
-                                    <div class="cgm-stat"><span class="cgm-stat-label">Below Range:</span><span class="cgm-stat-value" style="color: var(--warning);">${state.cgmImportSummary.belowPercent}%</span></div>
-                                    <div class="cgm-stat"><span class="cgm-stat-label">Above Range:</span><span class="cgm-stat-value" style="color: var(--danger);">${state.cgmImportSummary.abovePercent}%</span></div>
-                                </div>
-                                <div style="margin: 1rem 0;"><label class="form-label">Daily Summary:</label><div class="cgm-daily-summary">${state.cgmImportSummary.dailySummary}</div></div>
-                                <button class="btn btn-danger btn-small" onclick="app.clearCGMData()">Clear Imported Data</button>
-                            ` : `<p style="color: var(--gray-600); font-style: italic; margin-top: 0.5rem;">No data imported yet.</p>`}
-                        </div>
-                        <div class="settings-section">
                             <div class="settings-title">Adverse Event Reports</div>
                             ${state.adverseEvents.length > 0 ? `
                                 <p style="color: var(--gray-600); margin-bottom: 1rem;">You have ${state.adverseEvents.length} report(s).</p>
@@ -3728,10 +3852,21 @@
                 html += `
                     <div class="modal-overlay" onclick="app.closePrivacyModal()">
                         <div class="modal" onclick="event.stopPropagation()" style="max-width: 640px;">
-                            <div class="modal-title">Privacy Policy & Terms of Use</div>
+                            <div class="modal-title">Help & Legal Information</div>
                             <div class="modal-content" style="max-height: 500px; overflow-y: auto; font-size: 0.9rem; line-height: 1.7;">
 
                                 <p style="background: #b91c1c; color: white; padding: 0.75rem 1rem; border-radius: 0.375rem; font-weight: 700; text-align: center; margin-bottom: 1.5rem;">🚨 NOT FOR EMERGENCY USE. If you are experiencing a medical emergency, call 911 or go to your nearest emergency room immediately.</p>
+
+                                <p style="font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem;">How to Use This App</p>
+                                <ul style="margin-bottom: 1.5rem; padding-left: 1.25rem;">
+                                    <li><strong>Education</strong> — Learn about diet, exercise, stress, sleep, and diabetes basics</li>
+                                    <li><strong>Quick Sheets</strong> — One-page reference cards you can download or share</li>
+                                    <li><strong>Quiz</strong> — Test your knowledge and track progress</li>
+                                    <li><strong>Basal</strong> — Educational insulin titration tool (always consult your provider)</li>
+                                    <li><strong>Progress & Data</strong> — Track learning, import CGM data, take wellness screenings</li>
+                                    <li><strong>Medical Glossary</strong> — Searchable diabetes terminology</li>
+                                    <li><strong>Resources</strong> — Evidence base, lab targets, insurance help</li>
+                                </ul>
 
                                 <p style="font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem;">Privacy Policy</p>
 
@@ -4248,19 +4383,26 @@
                 const insulinType = document.getElementById('basal-insulin-type').value;
                 const dose = parseFloat(document.getElementById('basal-dose').value);
                 const frequency = document.getElementById('basal-frequency').value;
-                const r1 = parseInt(document.getElementById('basal-reading-1').value);
-                const r2 = parseInt(document.getElementById('basal-reading-2').value);
-                const r3 = parseInt(document.getElementById('basal-reading-3').value);
+                const numReadings = state.basalAveragingWindow || 3;
+                const readings = [];
+                for (let i = 1; i <= numReadings; i++) {
+                    const el = document.getElementById('basal-reading-' + i);
+                    const val = el ? parseInt(el.value) : NaN;
+                    if (!val || isNaN(val)) {
+                        alert('Please fill in all fields');
+                        return;
+                    }
+                    readings.push(val);
+                }
 
-                if (!insulinType || !dose || !frequency || !r1 || !r2 || !r3) {
+                if (!insulinType || !dose || !frequency) {
                     alert('Please fill in all fields');
                     return;
                 }
 
                 const insulin = BASAL_INSULINS.find(i => i.id === insulinType);
                 const thresholds = getAgeThresholds();
-                const readings = [r1, r2, r3];
-                const avgReading = (r1 + r2 + r3) / 3;
+                const avgReading = readings.reduce((a, b) => a + b, 0) / readings.length;
                 const allHigh = readings.every(r => r > thresholds.basalHigh);
                 const anyLow = readings.some(r => r < thresholds.basalLow);
 
@@ -4340,6 +4482,11 @@
 
             updateBasalInsulinSelection(value) {
                 state.basalSelectedInsulin = value || '';
+                render();
+            },
+
+            setBasalAveragingWindow(val) {
+                state.basalAveragingWindow = parseInt(val) || 3;
                 render();
             },
 
